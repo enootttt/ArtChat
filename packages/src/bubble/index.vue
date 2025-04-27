@@ -28,7 +28,7 @@ const slots: Slots = useSlots()
 
 const divRef = ref<HTMLDivElement>()
 
-const [typingEnabled, typingStep, typingInterval] = useTypingConfig(props.typing)
+const [typingEnabled, typingStep, typingInterval, typingSuffix] = useTypingConfig(props.typing)
 
 const contents = computed(() => {
   return props.content
@@ -68,6 +68,16 @@ watch(
   }
 )
 
+const mergedCls = computed(() => {
+  return [
+    ns.b(),
+    ns.b(props.placement),
+    {
+      [ns.b('typing')]: isTyping.value && !props.loading && !props.messageRender && !typingSuffix,
+    },
+  ]
+})
+
 function isString(content: any) {
   return typeof content === 'string'
 }
@@ -78,7 +88,7 @@ defineExpose({
 </script>
 
 <template>
-  <div ref="divRef" :class="[ns.b(), ns.b(placement)]">
+  <div ref="divRef" :class="mergedCls" :style="[typingSuffix ? `--cursor-char: ${typingSuffix}` : '']">
     <div
       v-if="slots.avatar || avatar"
       :class="[ns.b('avatar'), props.classNames?.avatar]"
@@ -117,6 +127,11 @@ defineExpose({
           <template v-else>
             <div v-html="mergeContent" />
           </template>
+          <template v-if="isTyping">
+            <slot name="suffix">
+              {{ typingSuffix }}
+            </slot>
+          </template>
         </template>
       </div>
       <div
@@ -147,6 +162,11 @@ defineExpose({
           <component :is="mergeContent" v-if="!isString(mergeContent)" />
           <template v-else>
             <div v-html="mergeContent" />
+          </template>
+          <template v-if="isTyping">
+            <slot name="suffix">
+              {{ typingSuffix }}
+            </slot>
           </template>
         </template>
       </div>

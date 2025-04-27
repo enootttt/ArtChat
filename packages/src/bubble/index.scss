@@ -5,6 +5,29 @@ $prefix: 'bubble' !default;
 
 @at-root {
   @include b($prefix) {
+    $E: &;
+
+    --cursor-char: '|';
+
+    @at-root {
+      @include b(#{$prefix}-typing) {
+        #{$E}-content {
+          &:last-child::after {
+            display: inline-block; /* 确保光标对齐 */
+            margin-left: 2px;
+            font-weight: 900;
+            user-select: none;
+            content: var(--cursor-char);
+            opacity: 1;
+            animation-name: cursorBlink;
+            animation-duration: 0.8s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+          }
+        }
+      }
+    }
+
     display: flex;
     column-gap: $padding-sm;
     max-width: 100%;
@@ -116,6 +139,20 @@ $prefix: 'bubble' !default;
 
   40% {
     transform: translateY(0);
+  }
+}
+
+@keyframes cursorBlink {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 
