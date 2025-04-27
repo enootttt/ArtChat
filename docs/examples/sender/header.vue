@@ -32,7 +32,7 @@ function submit() {
         </SenderHeader>
       </template>
       <template #prefix>
-        <ElButton link @click="open = !open">
+        <ElButton circle text @click="open = !open">
           <ElIcon>
             <Link />
           </ElIcon>
