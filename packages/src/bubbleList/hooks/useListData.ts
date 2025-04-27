@@ -15,14 +15,14 @@ export default function useListData(
   items: BubbleListProps['items'],
   roles?: BubbleListProps['roles']
 ): UseListDataReturnType {
-  let getRoleBubbleProps: (bubble: BubbleDataType) => Partial<BubbleProps>
+  let getRoleBubbleProps: (bubble: BubbleDataType, index: number) => Partial<BubbleProps>
 
   watch(
     () => roles,
     () => {
-      getRoleBubbleProps = (bubble: BubbleDataType): Partial<BubbleProps> => {
+      getRoleBubbleProps = (bubble: BubbleDataType, index: number): Partial<BubbleProps> => {
         if (typeof roles === 'function') {
-          return roles(bubble)
+          return roles(bubble, index)
         }
 
         if (roles) {
@@ -43,7 +43,7 @@ export default function useListData(
       const mergedKey = bubbleData.key ?? `preset_${i}`
 
       return {
-        ...getRoleBubbleProps(bubbleData),
+        ...getRoleBubbleProps(bubbleData, i),
         ...bubbleData,
         key: mergedKey,
       }
