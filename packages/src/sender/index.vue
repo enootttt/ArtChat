@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 import type { SenderProps } from './interface'
+
 import { ElInput } from 'element-plus'
+import { ref } from 'vue'
 
 import ArtCollapseTransition from '../collapseTransition/index.vue'
 import { useNamespace } from '../hooks/useNamespace'
@@ -75,7 +75,7 @@ function onInternalKeyPress(e: KeyboardEvent) {
 }
 
 defineExpose({
-  inputRef
+  inputRef,
 })
 </script>
 
@@ -90,13 +90,13 @@ defineExpose({
       </div>
       <slot name="components">
         <ElInput
-          :autosize="{ maxRows: 8 }"
+          ref="inputRef"
+          :autosize="autoSize || { maxRows: 8 }"
           :class="[ns.b('input'), classNames?.input]"
           :disabled="disabled"
           :model-value="modelValue"
           :readonly="readOnly"
           :placeholder="props.placeholder"
-          ref="inputRef"
           resize="none"
           type="textarea"
           v-bind="$attrs"
