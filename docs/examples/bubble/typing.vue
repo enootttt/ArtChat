@@ -19,6 +19,11 @@ const text = ref('hello world！')
       avatar="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
       :typing="{ step: 2, interval: 50 }"
     />
+    <Bubble
+      :content="text.repeat(repeat)"
+      avatar="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+      :typing="{ step: 2, interval: 50, suffix: '👋' }"
+    />
   </ElSpace>
 </template>
 
