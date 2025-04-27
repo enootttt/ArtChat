@@ -20,6 +20,7 @@ export interface SenderProps {
   readOnly?: boolean
   rootClassName?: string
   submitType?: SubmitType
+  autoSize?: { minRows?: number; maxRows?: number }
   onChange?: (value: string) => void
   onKeyPress?: (e: KeyboardEvent) => void
 }
