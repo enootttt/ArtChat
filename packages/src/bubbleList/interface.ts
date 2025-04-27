@@ -5,12 +5,18 @@ export type BubbleDataType = {
   role?: string
   [key: string]: any
 } & BubbleProps
+
 export type RoleType = Partial<Omit<BubbleProps, 'content'>>
+
+export type RolesType =
+  | Record<string, RoleType>
+  | ((bubbleDataP: BubbleDataType, index: number) => RoleType)
+
 export interface BubbleListProps {
   autoScroll?: boolean
   className?: string
   items: BubbleDataType[]
-  roles?: ((bubbleDataP: BubbleDataType) => RoleType) | Record<string, RoleType>
+  roles?: RolesType
   rootClassName?: string
 }
 
