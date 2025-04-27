@@ -64,13 +64,13 @@ sender/pasteImage
 
 :::
 
-<!-- ### 聚焦
+### 聚焦
 
 :::demo 使用 `ref` 选项控制聚焦。
 
 sender/focus
 
-::: -->
+:::
 
 ## API
 

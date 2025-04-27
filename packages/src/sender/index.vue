@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import type { SenderProps } from './interface'
 import { ElInput } from 'element-plus'
 
@@ -27,6 +29,8 @@ const slots = defineSlots<{
 }>()
 
 const ns = useNamespace('sender')
+
+const inputRef = ref<InstanceType<typeof ElInput>>()
 
 function triggerValueChange(nextValue: string) {
   if (props?.onChange) {
@@ -69,6 +73,10 @@ function onInternalKeyPress(e: KeyboardEvent) {
     props.onKeyPress(e)
   }
 }
+
+defineExpose({
+  inputRef
+})
 </script>
 
 <template>
@@ -88,6 +96,7 @@ function onInternalKeyPress(e: KeyboardEvent) {
           :model-value="modelValue"
           :readonly="readOnly"
           :placeholder="props.placeholder"
+          ref="inputRef"
           resize="none"
           type="textarea"
           v-bind="$attrs"
