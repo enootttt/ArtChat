@@ -5,7 +5,7 @@ import { ArrowLeftBold, ArrowRightBold, UploadFilled } from '@element-plus/icons
 
 import { ElButton, ElIcon } from 'element-plus'
 
-import { onMounted, ref, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 
 import SilentUploader from '../attachment/silentUploader.vue'
 import { useNamespace } from '../hooks/useNamespace'
@@ -42,9 +42,11 @@ function checkPing() {
 }
 
 watch(
-  () => props.overflow,
+  () => [props.overflow, props.items],
   () => {
-    checkPing()
+    nextTick(() => {
+      checkPing()
+    })
   }
 )
 
