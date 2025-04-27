@@ -79,10 +79,10 @@ sender/focus
 ### SenderProps
 
 | 属性          | 说明               | 类型                                                       | 默认值                  | 版本 |
-| ------------- | ------------------ | ---------------------------------------------------------- | ----------------------- | ---- | --- |
-| v-model       | 双向绑定           | string                                                     | -                       | -    | -   |
+| ------------- | ------------------ | ---------------------------------------------------------- | ----------------------- | ---- |
+| v-model       | 双向绑定           | string                                                     | -                       | -    |
 | classNames    | 样式类名           | Partial<Record<SemanticType, string>>                      | -                       | -    |
-| placeholder   | 占位符             | string                                                     | -                       | -    | -   |
+| placeholder   | 占位符             | string                                                     | -                       | -    |
 | disabled      | 是否禁用           | boolean                                                    | false                   | -    |
 | loading       | 是否加载中         | boolean                                                    | false                   | -    |
 | readOnly      | 是否让输入框只读   | boolean                                                    | false                   | -    |
