@@ -28,6 +28,7 @@ export default antfu({
     'antfu/if-newline': 'off', // 忽略if语句换行
     'style/member-delimiter-style': 'off', // 忽略对象成员分隔符风格
     'style/arrow-parens': 'off', // 忽略箭头函数参数括号
+    'vue/singleline-html-element-content-newline': 'off', // 忽略单行html元素内容换行
   },
   ignores: [
     '**/dist/**',
