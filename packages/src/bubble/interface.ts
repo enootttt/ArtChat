@@ -9,6 +9,10 @@ export interface TypingOption {
    * @default 1
    */
   step?: number
+  /**
+   * @default null
+   */
+  suffix?: string | null
 }
 
 export interface BubbleProps {
