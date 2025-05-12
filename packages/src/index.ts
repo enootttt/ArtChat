@@ -18,6 +18,8 @@ export type * from './conversations'
 export * from './fileList'
 export type * from './fileList'
 
+export * from './hooks'
+
 export { default as Prompts } from './prompts'
 export type * from './prompts'
 
