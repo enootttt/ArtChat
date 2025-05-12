@@ -135,7 +135,7 @@ export interface ArtStreamOptions<Output> {
   transformStream?: TransformStream<string, Output>
 }
 
-interface ArtReadableStream<R = any> extends ReadableStream<R> {
+export interface ArtReadableStream<R = any> extends ReadableStream<R> {
   [Symbol.asyncIterator]: () => AsyncGenerator<R, void, unknown>
 }
 
