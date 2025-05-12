@@ -82,6 +82,11 @@ export interface ArtRequestCallbacks<Output> {
    * @description Callback when the request is updated
    */
   onUpdate: (chunk: Output) => void
+
+  /**
+   * @description Callback monitoring and control the stream
+   */
+  onStream?: (abortController: AbortController) => void
 }
 
 export type ArtRequestFunction<Input = AnyObject, Output = SSEOutput> = (
@@ -91,65 +96,17 @@ export type ArtRequestFunction<Input = AnyObject, Output = SSEOutput> = (
 ) => Promise<void>
 
 class ArtRequestClass {
-  private static instanceBuffer: Map<string | typeof fetch, ArtRequestClass> = new Map()
-  private customOptions: ArtRequestCustomOptions
-
-  private defaultHeaders: RequestInit['headers']
   readonly baseURL: string
-
-  public create = async <Input = AnyObject, Output = SSEOutput>(
-    params: ArtRequestParams & Input,
-    callbacks?: ArtRequestCallbacks<Output>,
-    transformStream?: ArtStreamOptions<Output>['transformStream']
-  ) => {
-    const requestInit = {
-      method: 'POST',
-      body: JSON.stringify({
-        model: this.model,
-        ...params,
-      }),
-      headers: this.defaultHeaders,
-    }
-
-    try {
-      const response = await ArtFetch(this.baseURL, {
-        fetch: this.customOptions.fetch,
-        ...requestInit,
-      })
-
-      const contentType = response.headers.get('content-type') || ''
-
-      if (transformStream) {
-        await this.customResponseHandler<Output>(response, callbacks, transformStream)
-        return
-      }
-
-      switch (contentType) {
-        case 'text/event-stream':
-          await this.sseResponseHandler<Output>(response, callbacks)
-          break
-        case 'application/json':
-          await this.jsonResponseHandler<Output>(response, callbacks)
-          break
-        default:
-          throw new Error(`Unsupported content type: ${contentType}`)
-      }
-    } catch (error) {
-      const err = error instanceof Error ? error : new Error('Unknown error!')
-
-      callbacks?.onError?.(err)
-
-      throw err
-    }
-  }
-
   readonly model: string
 
+  private defaultHeaders: RequestInit['headers']
+  private customOptions: ArtRequestCustomOptions
+
   private constructor(options: ArtRequestOptions) {
-    const { /* baseURL, model, dangerouslyApiKey, */ ...customOptions } = options
+    const { baseURL, model, dangerouslyApiKey, ...customOptions } = options
 
     this.baseURL = options.baseURL
-    this.model = options.model as string
+    this.model = options.model!
     this.defaultHeaders = {
       'Content-Type': 'application/json',
       ...(options.dangerouslyApiKey && {
@@ -163,13 +120,59 @@ class ArtRequestClass {
     if (!options.baseURL || typeof options.baseURL !== 'string')
       throw new Error('The baseURL is not valid!')
 
-    const id = options.fetch || options.baseURL
+    return new ArtRequestClass(options)
+  }
 
-    if (!ArtRequestClass.instanceBuffer.has(id)) {
-      ArtRequestClass.instanceBuffer.set(id, new ArtRequestClass(options))
+  public create = async <Input = AnyObject, Output = SSEOutput>(
+    params: ArtRequestParams & Input,
+    callbacks?: ArtRequestCallbacks<Output>,
+    transformStream?: ArtStreamOptions<Output>['transformStream']
+  ) => {
+    const abortController = new AbortController()
+    const requestInit = {
+      method: 'POST',
+      body: JSON.stringify({
+        model: this.model,
+        ...params,
+      }),
+      headers: this.defaultHeaders,
+      signal: abortController.signal,
     }
 
-    return ArtRequestClass.instanceBuffer.get(id) as ArtRequestClass
+    callbacks?.onStream?.(abortController)
+
+    try {
+      const response = await ArtFetch(this.baseURL, {
+        fetch: this.customOptions.fetch,
+        ...requestInit,
+      })
+
+      if (transformStream) {
+        await this.customResponseHandler<Output>(response, callbacks, transformStream)
+        return
+      }
+
+      const contentType = response.headers.get('content-type') || ''
+
+      const mimeType = contentType.split(';')[0].trim()
+
+      switch (mimeType) {
+        case 'text/event-stream':
+          await this.sseResponseHandler<Output>(response, callbacks)
+          break
+        case 'application/json':
+          await this.jsonResponseHandler<Output>(response, callbacks)
+          break
+        default:
+          throw new Error(`The response content-type: ${contentType} is not support!`)
+      }
+    } catch (error) {
+      const err = error instanceof Error ? error : new Error('Unknown error!')
+
+      callbacks?.onError?.(err)
+
+      throw err
+    }
   }
 
   private customResponseHandler = async <Output = SSEOutput>(
@@ -197,9 +200,11 @@ class ArtRequestClass {
   ) => {
     const chunks: Output[] = []
 
-    for await (const chunk of ArtStream<Output>({
+    const stream = ArtStream<Output>({
       readableStream: response.body!,
-    })) {
+    })
+
+    for await (const chunk of stream) {
       chunks.push(chunk)
 
       callbacks?.onUpdate?.(chunk)
