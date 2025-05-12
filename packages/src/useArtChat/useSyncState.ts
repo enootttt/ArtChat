@@ -3,21 +3,26 @@
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 
-type Updater<T> = (prev: T) => T
+type Getter<T> = () => T
+type Setter<T> = (pre: T) => T
 
-export default function useSyncState<T>(
-  defaultState: T,
-  onChange: (newValue: T, prevValue: T) => void
-): [Ref<T>, (updater: T | Updater<T>) => void] {
-  const stateRef = ref(defaultState)
+export default function useSyncState<T>(defaultState: T | Getter<T>) {
+  const force = ref(0)
 
-  function setState(updater: any) {
+  const stateRef = ref(
+    typeof defaultState === 'function' ? (defaultState as Getter<T>)() : defaultState
+  )
+
+  function setState(updater: Setter<T>) {
     const newValue = typeof updater === 'function' ? updater(stateRef.value) : updater
-    if (newValue !== stateRef.value) {
-      onChange(newValue, stateRef.value as T)
-    }
     stateRef.value = newValue
+
+    force.value += 1
   }
 
-  return [stateRef as Ref<T>, setState]
+  const getState: Getter<T> = () => {
+    return stateRef.value
+  }
+
+  return [stateRef as Ref<T>, setState, getState] as const
 }

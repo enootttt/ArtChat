@@ -135,9 +135,7 @@ export interface ArtStreamOptions<Output> {
   transformStream?: TransformStream<string, Output>
 }
 
-export interface ArtReadableStream<R = any> extends ReadableStream<R> {
-  [Symbol.asyncIterator]: () => AsyncGenerator<R, void, unknown>
-}
+export type ArtReadableStream<R = SSEOutput> = ReadableStream<R> & AsyncGenerator<R>
 
 /**
  * @description 默认情况下，将 Uint8Array 二进制流转换为 {@link SSEOutput}
