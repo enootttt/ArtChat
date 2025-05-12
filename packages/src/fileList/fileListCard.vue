@@ -4,7 +4,7 @@ import type { Component } from 'vue'
 import type { FileListCardProps } from './interface'
 import { CircleCloseFilled } from '@element-plus/icons-vue'
 
-import { ElIcon } from 'element-plus'
+import { ElIcon, ElImage } from 'element-plus'
 import { computed, ref, toRaw, watch } from 'vue'
 
 import { previewImage } from '../attachment/util'
@@ -173,7 +173,7 @@ const isImgPreview = computed(() => isImg.value && (props.item?.file || previewU
     ]"
   >
     <template v-if="isImgPreview">
-      <img v-if="previewUrl" :src="previewUrl" alt="preview">
+      <ElImage v-if="previewUrl" :src="previewUrl" alt="preview" :preview-src-list="[previewUrl]" preview-teleported hide-on-click-modal loading="lazy" />
       <div
         v-if="props.item?.status && props.item?.status !== 'ready'"
         :class="[`${ns.b('img-mask')}`]"
