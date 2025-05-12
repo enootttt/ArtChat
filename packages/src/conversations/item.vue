@@ -76,7 +76,7 @@ function handleCommand(e: any) {
       <div
         ref="textRef"
         :class="ns.b('label')"
-        :style="{ textOverflow: 'ellipsis', '-webkit-line-clamp': line }"
+        :style="{ 'textOverflow': 'ellipsis', '-webkit-line-clamp': line }"
         @mouseenter="textRefMouseenter"
       >
         <slot :item="info" name="label">
@@ -89,6 +89,7 @@ function handleCommand(e: any) {
         :menu="Array.isArray(menu) ? menu : menu.items"
         :placement="direction === 'rtl' ? 'bottom-start' : 'bottom-end'"
         trigger="click"
+        :teleported="!Array.isArray(menu) ? menu?.teleported : true"
         @command="handleCommand"
       >
         <ElButton :disabled="info?.disabled" link @click="stopPropagation">

@@ -6,6 +6,7 @@ type GroupType = string
 
 export interface MenuProps {
   items: DropDownItemProps[]
+  teleported?: boolean
   onClick?: (value: Conversation) => void
 }
 /**
