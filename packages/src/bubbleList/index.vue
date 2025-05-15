@@ -20,6 +20,7 @@ const slots = defineSlots<{
   header?: (slotProps: { info: BubbleDataType }) => void
   loading?: (slotProps: { info: BubbleDataType }) => void
   footer?: (slotProps: { info: BubbleDataType }) => void
+  content?: (slotProps: { info: BubbleDataType }) => void
 }>()
 
 const ns = useNamespace('bubble-list')
