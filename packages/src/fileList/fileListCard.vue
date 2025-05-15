@@ -23,7 +23,6 @@ import ZipIcon from './ZipIcon.vue'
 
 const props = withDefaults(defineProps<FileListCardProps>(), {
   disabled: false,
-  onRemove: () => {},
   className: '',
   style: undefined,
 })
@@ -209,7 +208,7 @@ const isImgPreview = computed(() => isImg.value && (props.item?.file || previewU
       </div>
     </template>
     <template v-if="!props.disabled && props.onRemove">
-      <button :class="[ns.b('remove')]" type="button" @click="onRemove(item)">
+      <button :class="[ns.b('remove')]" type="button" @click="props.onRemove(item)">
         <ElIcon size="20">
           <CircleCloseFilled />
         </ElIcon>
