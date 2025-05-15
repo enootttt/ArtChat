@@ -88,7 +88,11 @@ defineExpose({
 </script>
 
 <template>
-  <div ref="divRef" :class="mergedCls" :style="[typingSuffix ? `--cursor-char: ${typingSuffix}` : '']">
+  <div
+    ref="divRef"
+    :class="mergedCls"
+    :style="[typingSuffix ? `--cursor-char: ${typingSuffix}` : '']"
+  >
     <div
       v-if="slots.avatar || avatar"
       :class="[ns.b('avatar'), props.classNames?.avatar]"
@@ -123,15 +127,17 @@ defineExpose({
         </template>
         <template v-else>
           <!-- 根据 mergedContent 类型选择渲染方式 -->
-          <component :is="mergeContent" v-if="!isString(mergeContent)" />
-          <template v-else>
-            <div v-html="mergeContent" />
-          </template>
-          <template v-if="isTyping">
-            <slot name="suffix">
-              {{ typingSuffix }}
-            </slot>
-          </template>
+          <slot name="content">
+            <component :is="mergeContent" v-if="!isString(mergeContent)" />
+            <template v-else>
+              <div v-html="mergeContent" />
+            </template>
+            <template v-if="isTyping">
+              <slot name="suffix">
+                {{ typingSuffix }}
+              </slot>
+            </template>
+          </slot>
         </template>
       </div>
       <div
@@ -158,16 +164,18 @@ defineExpose({
           <Loading v-else :prefix-cls="ns.b()" />
         </template>
         <template v-else>
-          <!-- 根据 mergedContent 类型选择渲染方式 -->
-          <component :is="mergeContent" v-if="!isString(mergeContent)" />
-          <template v-else>
-            <div v-html="mergeContent" />
-          </template>
-          <template v-if="isTyping">
-            <slot name="suffix">
-              {{ typingSuffix }}
-            </slot>
-          </template>
+          <slot name="content">
+            <!-- 根据 mergedContent 类型选择渲染方式 -->
+            <component :is="mergeContent" v-if="!isString(mergeContent)" />
+            <template v-else>
+              <div v-html="mergeContent" />
+            </template>
+            <template v-if="isTyping">
+              <slot name="suffix">
+                {{ typingSuffix }}
+              </slot>
+            </template>
+          </slot>
         </template>
       </div>
     </template>
