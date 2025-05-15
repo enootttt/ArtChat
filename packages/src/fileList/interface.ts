@@ -18,9 +18,9 @@ export interface FileListCardProps {
 
 export interface fileListProps {
   items: Attachment[]
-  onRemove: (item: Attachment) => void
+  onRemove?: FileListCardProps['onRemove']
   overflow?: 'scrollX' | 'scrollY' | 'wrap'
-  upload: Partial<UploadProps>
+  upload?: Partial<UploadProps>
   disabled?: boolean
 
   // Semantic
