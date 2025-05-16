@@ -14,7 +14,7 @@ function submit() {
 
 <template>
   <ElSpace style="width: 100%; height: 300px" fill alignment="end">
-    <Sender v-model="value" @on-submit="submit">
+    <Sender v-model="value" @submit="submit">
       <template #header>
         <SenderHeader title="Upload Sample" :open="open">
           <template #default>

@@ -24,7 +24,7 @@ function submit() {
       v-model="value"
       submit-type="shiftEnter"
       placeholder="Press Shift + Enter to send message"
-      @on-submit="submit"
+      @submit="submit"
     >
       <template #header>
         <SenderHeader :open="hasRef">
