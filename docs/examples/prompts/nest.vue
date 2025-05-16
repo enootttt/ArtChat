@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PromptProps, PromptsProps } from '@artmate/chat'
+import type { PromptsProps } from '@artmate/chat'
 import { Prompts } from '@artmate/chat'
 
 const items: PromptsProps['items'] = [
