@@ -22,7 +22,7 @@ const content = ref('')
 const senderLoading = ref(false)
 
 // Agent for request
-const [agent] = useArtAgent({
+const [agent] = useArtAgent<string, { message: string }, string>({
   request: async ({ message }, { onSuccess, onError }) => {
     senderLoading.value = true
     await sleep()
@@ -32,7 +32,7 @@ const [agent] = useArtAgent({
     mockSuccess.value = !mockSuccess.value
 
     if (mockSuccess.value) {
-      onSuccess(`Mock success return. You said: ${message}`)
+      onSuccess([`Mock success return. You said: ${message}`])
     }
 
     onError(new Error('Mock request failed'))

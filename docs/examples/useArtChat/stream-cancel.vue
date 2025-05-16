@@ -55,7 +55,7 @@ const senderLoading = ref(false)
 const abort = ref(() => {})
 
 // Agent for request
-const [agent] = useArtAgent({
+const [agent] = useArtAgent<string, { message: string }, string>({
   request: async (_, { onUpdate, onSuccess }) => {
     senderLoading.value = true
     const stream = ArtStream({
@@ -70,7 +70,7 @@ const [agent] = useArtAgent({
       const { value, done } = await reader.read()
       if (done) {
         senderLoading.value = false
-        onSuccess(current)
+        onSuccess([current])
         break
       }
       if (!value) continue

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { BubbleListProps } from '@artmate/chat'
+import type { BubbleDataType, BubbleListProps, PromptProps } from '@artmate/chat'
 import { BubbleList, Prompts, Sender, useArtAgent, useArtChat } from '@artmate/chat'
-import { Promotion, Service } from '@element-plus/icons-vue'
+import { Promotion } from '@element-plus/icons-vue'
 import { ElAvatar, ElButton, ElIcon, ElSpace } from 'element-plus'
-import { computed, h, ref, shallowRef } from 'vue'
+import { computed, ref } from 'vue'
 import SenderLoading from './loading.vue'
 
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000))
@@ -19,16 +19,6 @@ const roles: BubbleListProps['roles'] = {
   suggestion: {
     placement: 'start',
     variant: 'borderless',
-    messageRender: (content) => {
-      return h(Prompts, {
-        vertical: true,
-        icon: shallowRef(Service),
-        items: (content as any as string[]).map((text) => ({
-          key: text,
-          description: text,
-        })),
-      })
-    },
   },
 }
 
@@ -40,29 +30,20 @@ interface AgentUserMessage {
 interface AgentAIMessage {
   type: 'ai'
   content?: string
-  list?: (
-    | {
-        type: 'text'
-        content: string
-      }
-    | {
-        type: 'suggestion'
-        content: string[]
-      }
-  )[]
+  list?: {
+    type: 'text' | 'suggestion'
+    content?: string
+    prompts?: PromptProps[]
+  }[]
 }
 
 type AgentMessage = AgentUserMessage | AgentAIMessage
-
-interface BubbleMessage {
-  role: string
-}
 
 const content = ref('')
 const senderLoading = ref(false)
 
 // Agent for request
-const [agent] = useArtAgent<AgentMessage>({
+const [agent] = useArtAgent<AgentMessage, { message: AgentMessage }, AgentMessage>({
   request: async ({ message }, { onSuccess }) => {
     senderLoading.value = true
     await sleep()
@@ -70,24 +51,39 @@ const [agent] = useArtAgent<AgentMessage>({
     const { content } = message || {}
 
     senderLoading.value = false
-    onSuccess({
-      type: 'ai',
-      list: [
-        {
-          type: 'text',
-          content: `Do you want?`,
-        },
-        {
-          type: 'suggestion',
-          content: [`Look at: ${content}`, `Search: ${content}`, `Try: ${content}`],
-        },
-      ],
-    })
+    onSuccess([
+      {
+        type: 'ai',
+        list: [
+          {
+            type: 'text',
+            content: `Do you want?`,
+          },
+          {
+            type: 'suggestion',
+            prompts: [
+              {
+                key: '1',
+                description: `Look at: ${content}`,
+              },
+              {
+                key: '2',
+                description: `Search: ${content}`,
+              },
+              {
+                key: '3',
+                description: `Try: ${content}`,
+              },
+            ],
+          },
+        ],
+      },
+    ])
   },
 })
 
 // Chat messages
-const { onRequest, parsedMessages } = useArtChat<AgentMessage, BubbleMessage>({
+const { onRequest, parsedMessages } = useArtChat({
   agent,
   defaultMessages: [
     {
@@ -111,17 +107,20 @@ const { onRequest, parsedMessages } = useArtChat<AgentMessage, BubbleMessage>({
 
     return (list || []).map((msg) => ({
       role: msg.type,
-      content: msg.content,
+      content: msg?.content || '',
+      prompts: msg.type === 'suggestion' ? msg.prompts : undefined,
     }))
   },
 })
 
 const messageList = computed(() => {
-  return parsedMessages.value.map(({ id, message, status }) => ({
+  // 处理消息列表，将最后一条消息的 prompts 传递给 BubbleList
+  return parsedMessages.value.map(({ id, message, status }, index) => ({
     key: id,
     loading: status === 'loading',
     ...message,
-  }))
+    prompts: index === parsedMessages.value.length - 1 ? message?.prompts : undefined,
+  })).filter(item => item.content || item.prompts?.length) as BubbleDataType[]
 })
 
 function submit() {
@@ -143,6 +142,11 @@ function submit() {
             {{ info.role || info.key }}
           </template>
         </ElAvatar>
+      </template>
+      <template #content="{ info }">
+        <template v-if="info.role === 'suggestion'">
+          <Prompts :items="info.prompts" />
+        </template>
       </template>
     </BubbleList>
     <Sender v-model="content" :loading="senderLoading">

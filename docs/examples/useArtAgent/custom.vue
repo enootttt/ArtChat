@@ -13,7 +13,7 @@ function log(text: string) {
   lines.value = [...lines.value, text]
 }
 
-const [agent] = useArtAgent({
+const [agent] = useArtAgent<string, { message: string }, string>({
   request: ({ message }, { onUpdate, onSuccess }) => {
     let times = 0
 
@@ -22,7 +22,7 @@ const [agent] = useArtAgent({
       onUpdate(`Thinking...(${times}/3)`)
 
       if (times >= 3) {
-        onSuccess(`It's funny that you ask: ${message}`)
+        onSuccess([`It's funny that you ask: ${message}`])
         clearInterval(id)
       }
     }, 500)
