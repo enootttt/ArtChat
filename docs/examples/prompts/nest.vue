@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PromptsProps } from '@artmate/chat'
+import type { PromptProps, PromptsProps } from '@artmate/chat'
 import { Prompts } from '@artmate/chat'
 
 const items: PromptsProps['items'] = [
@@ -85,6 +85,6 @@ const style = {
 .prompts {
   padding: 24px;
   background: #ffffff;
-  --color-text-tertiary: rgba(var(--dark), 45%);
+  --color-text-tertiary: #999999;
 }
 </style>
