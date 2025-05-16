@@ -10,7 +10,10 @@ const props = withDefaults(defineProps<SuggestionProps<T>>(), {
   rootClassName: '',
 })
 
-const emit = defineEmits(['select'])
+const emit = defineEmits<{
+  (e: 'openChange', open: boolean): void
+  (e: 'select', value: string): void
+}>()
 
 defineSlots<{
   default: (options: {
@@ -41,7 +44,7 @@ const itemList = computed(() => {
 
 function triggerOpen(nextOpen: boolean) {
   mergedOpen.value = nextOpen
-  props.onOpenChange?.(nextOpen)
+  emit('openChange', nextOpen)
   if (!nextOpen) {
     CascaderPanelRef.value?.clearCheckedNodes()
   }
