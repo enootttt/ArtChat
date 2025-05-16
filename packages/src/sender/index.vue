@@ -14,11 +14,14 @@ const props = withDefaults(defineProps<SenderProps>(), {
   classNames: undefined,
   rootClassName: '',
   placeholder: '',
-  onChange: () => {},
-  onKeyPress: () => {},
 })
 
-const emit = defineEmits(['update:modelValue', 'onSubmit'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string): void
+  (e: 'submit'): void
+  (e: 'change', value: string): void
+  (e: 'keyPress', value: KeyboardEvent): void
+}>()
 
 const slots = defineSlots<{
   header?: () => void
@@ -33,9 +36,7 @@ const ns = useNamespace('sender')
 const inputRef = ref<InstanceType<typeof ElInput>>()
 
 function triggerValueChange(nextValue: string) {
-  if (props?.onChange) {
-    props.onChange(nextValue)
-  }
+  emit('change', nextValue)
 }
 
 function InputChangeFn(e: string) {
@@ -44,7 +45,7 @@ function InputChangeFn(e: string) {
 
 function triggerSend() {
   if (props.modelValue && !props.loading) {
-    emit('onSubmit')
+    emit('submit')
   }
 }
 
@@ -69,9 +70,7 @@ function onInternalKeyPress(e: KeyboardEvent) {
     }
   }
 
-  if (props.onKeyPress) {
-    props.onKeyPress(e)
-  }
+  emit('keyPress', e)
 }
 
 defineExpose({
