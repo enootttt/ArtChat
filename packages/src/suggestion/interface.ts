@@ -12,7 +12,6 @@ export interface SuggestionProps<T = any> {
   className?: string
   rootClassName?: string
   style?: CSSProperties
-  onOpenChange?: (open: boolean) => void
   items: CascaderOption[] | ((info?: T) => CascaderOption[])
   block?: boolean
   styles?: Partial<Record<string, CSSProperties>>
