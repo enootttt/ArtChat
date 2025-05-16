@@ -22,6 +22,11 @@ const props = withDefaults(defineProps<BubbleProps>(), {
   typing: false,
 })
 
+const emit = defineEmits<{
+  (e: 'update'): void
+  (e: 'typingComplete'): void
+}>()
+
 const ns = useNamespace('bubble')
 
 const slots: Slots = useSlots()
@@ -43,7 +48,7 @@ const [typedContent, isTyping]: [Ref<() => string | VNode>, Ref<boolean>] = useT
 watch(
   () => typedContent.value,
   () => {
-    props.onUpdate?.()
+    emit('update')
   }
 )
 
@@ -60,7 +65,7 @@ watch(
     if (!isTyping.value && !props.loading) {
       if (!triggerTypingCompleteRef.value) {
         triggerTypingCompleteRef.value = true
-        props.onTypingComplete?.()
+        emit('typingComplete')
       }
     } else {
       triggerTypingCompleteRef.value = false

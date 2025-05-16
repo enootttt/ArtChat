@@ -27,8 +27,6 @@ export interface BubbleProps {
   loading?: boolean
   loadingRender?: () => VNode
   messageRender?: (content: string) => string | VNode
-  onTypingComplete?: () => void
-  onUpdate?: () => void
   placement?: 'end' | 'start'
   shape?: 'corner' | 'round'
   styles?: {
