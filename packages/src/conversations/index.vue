@@ -40,14 +40,8 @@ function onConversationItemClick(info: Conversation) {
     <template v-for="(groupInfo, groupIndex) in groupList" :key="groupIndex">
       <template v-if="enableGroup">
         <li :key="groupInfo.name || `key-${groupIndex}`">
-          <template v-if="groupInfo.title">
-            <component
-              :is="
-                groupInfo.title?.(groupInfo.name as string, {
-                  components: { GroupTitle },
-                })
-              "
-            />
+          <template v-if="$slots.title">
+            <slot name="title" :info="groupInfo" />
           </template>
           <GroupTitle v-else :key="groupInfo.name">
             {{ groupInfo.name }}
