@@ -93,9 +93,11 @@ function handleCommand(e: any) {
         @command="handleCommand"
       >
         <ElButton :disabled="info?.disabled" link @click="stopPropagation">
-          <ElIcon :class="ns.b('menu-icon')">
-            <MoreFilled />
-          </ElIcon>
+          <slot name="menu-icon" :info="info">
+            <ElIcon :class="ns.b('menu-icon')">
+              <MoreFilled />
+            </ElIcon>
+          </slot>
         </ElButton>
       </DropDown>
     </li>
