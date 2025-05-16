@@ -126,12 +126,13 @@ bubble/gpt-vis
 
 ### Bubble Slots
 
-| 插槽名  | 说明         | 类型 |
-| ------- | ------------ | ---- |
-| avatar  | 头像         | -    |
-| header  | 头部面板     | -    |
-| footer  | 底部内容     | -    |
-| loading | loading 占位 | -    |
+| 插槽名  | 说明           | 类型 |
+| ------- | -------------- | ---- |
+| avatar  | 头像           | -    |
+| header  | 头部面板       | -    |
+| footer  | 底部内容       | -    |
+| loading | loading 占位   | -    |
+| content | 自定义内容插槽 | -    |
 
 ### Bubble.List
 

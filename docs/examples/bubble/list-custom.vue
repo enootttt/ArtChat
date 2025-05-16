@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { BubbleListProps, PromptProps } from '@artmate/chat'
 import { BubbleList, FileList, Prompts } from '@artmate/chat'
-import { h } from 'vue'
 
 const promptItems: PromptProps[] = [
   {
@@ -57,12 +56,7 @@ const items: BubbleListProps['items'] = [
     role: 'suggestion',
     variant: 'borderless',
     avatar: '123',
-    styles: {
-      avatar: {
-        visibility: 'hidden',
-      },
-    },
-    messageRender: () => h(Prompts, { items: promptItems, vertical: true }),
+    prompts: promptItems,
   },
   // Role: file
   {
@@ -70,28 +64,29 @@ const items: BubbleListProps['items'] = [
     role: 'file',
     variant: 'borderless',
     avatar: '123',
-    styles: {
-      avatar: {
-        visibility: 'hidden',
-      },
-    },
-    messageRender: () =>
-      h(FileList, {
-        items: fileItems,
-        listStyle: {
-          flexDirection: 'column',
-          padding: '0px',
-        },
-        disabled: true,
-        onRemove: () => {},
-        upload: {},
-      }),
+    fileList: fileItems,
   },
 ]
 </script>
 
 <template>
-  <BubbleList :items="items" />
+  <BubbleList :items="items">
+    <template #avatar="{ info }">
+      <div v-if="info.role !== 'ai'" style="margin-left: 32px; visibility: hidden" />
+    </template>
+    <template #content="{ info }">
+      <FileList
+        v-if="info.role === 'file'"
+        :items="info.fileList"
+        :disabled="true"
+        :list-style="{
+          flexDirection: 'column',
+          padding: '6px 5px 0px 0px',
+        }"
+      />
+      <Prompts v-else-if="info.role === 'suggestion'" :items="info.prompts" vertical />
+    </template>
+  </BubbleList>
 </template>
 
 <style lang="scss" scoped></style>

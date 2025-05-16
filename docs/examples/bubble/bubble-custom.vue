@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { BubbleListProps } from '@artmate/chat'
 import { BubbleList } from '@artmate/chat'
-import { computed, h, ref } from 'vue'
+import { Loading } from '@element-plus/icons-vue'
+import { ElIcon } from 'element-plus'
+import { computed, ref } from 'vue'
 
 const BubbleListRef = ref<InstanceType<typeof BubbleList>>()
 
@@ -10,7 +12,6 @@ const rolesAsObject: BubbleListProps['roles'] = {
     placement: 'start',
     avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
     typing: { step: 5, interval: 20 },
-    loadingRender: () => h('div', null, 'Custom loading...'),
   },
   user: {
     placement: 'end',
@@ -46,7 +47,16 @@ const items = computed(() => [
     :roles="rolesAsObject"
     auto-scroll
     :style="{ maxHeight: '300px' }"
-  />
+  >
+    <template #loading="{ info }">
+      <div v-if="info.role === 'ai'">
+        Custom loading...
+        <ElIcon>
+          <Loading />
+        </ElIcon>
+      </div>
+    </template>
+  </BubbleList>
 </template>
 
 <style lang="scss" scoped>
