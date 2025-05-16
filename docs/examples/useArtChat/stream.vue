@@ -19,7 +19,7 @@ const content = ref('')
 const senderLoading = ref(false)
 
 // Agent for request
-const [agent] = useArtAgent({
+const [agent] = useArtAgent<string, { message: string }, string>({
   request: async ({ message }, { onUpdate, onSuccess }) => {
     senderLoading.value = true
     const fullContent = `Streaming output instead of Bubble typing effect. You typed: ${message}`
@@ -31,7 +31,7 @@ const [agent] = useArtAgent({
       if (currentContent === fullContent) {
         senderLoading.value = false
         clearInterval(id)
-        onSuccess(fullContent)
+        onSuccess([fullContent])
       }
     }, 100)
   },
