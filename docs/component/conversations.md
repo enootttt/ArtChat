@@ -66,11 +66,12 @@ conversations/group-sort
 
 ### Bubble Slots
 
-| 插槽名 | 说明                 | 类型 |
-| ------ | -------------------- | ---- |
-| title  | 排序后自定义头部内容 | -    |
-| item   | 自定义label区域内容  | -    |
-| icon   | 自定义icon区域内容   | -    |
+| 插槽名    | 说明                       | 类型 |
+| --------- | -------------------------- | ---- |
+| title     | 排序后自定义头部内容       | -    |
+| item      | 自定义label区域内容        | -    |
+| icon      | 自定义icon区域内容         | -    |
+| menu-icon | 自定义下拉菜单icon区域内容 | -    |
 
 ### Conversation
 
