@@ -64,6 +64,14 @@ conversations/group-sort
 | styles            | 语义化结构 style                                         | Record<'item', CSSProperties>                       | -      | -    |
 | classNames        | 语义化结构 className                                     | Record<'item', string>                              | -      | -    |
 
+### Bubble Slots
+
+| 插槽名 | 说明                 | 类型 |
+| ------ | -------------------- | ---- |
+| title  | 排序后自定义头部内容 | -    |
+| item   | 自定义label区域内容  | -    |
+| icon   | 自定义icon区域内容   | -    |
+
 ### Conversation
 
 | 属性      | 说明                                                 | 类型            | 默认值 | 版本 |

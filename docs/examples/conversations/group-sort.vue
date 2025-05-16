@@ -3,7 +3,7 @@ import type { ConversationsProps } from '@artmate/chat'
 import { Conversations } from '@artmate/chat'
 import { Service } from '@element-plus/icons-vue'
 import { ElIcon } from 'element-plus'
-import { h, ref } from 'vue'
+import { ref } from 'vue'
 
 const items: ConversationsProps['items'] = Array.from({ length: 6 }).map((_, index) => {
   const timestamp = index <= 3 ? 1732204800000 : 1732204800000 - 60 * 60 * 24
@@ -22,24 +22,6 @@ const groupable = {
 
     return a === 'Today' ? -1 : 1
   },
-  title: (group: string, title: any) => {
-    // 此处为示例，不推荐，业务上应提取组件出来
-    return group
-      ? h(title.components.GroupTitle, null, () =>
-          h(
-            'div',
-            {
-              style: {
-                display: 'flex',
-                gap: '10px',
-                alignItems: 'center',
-              },
-            },
-            [h(ElIcon, null, () => h(Service)), h('div', null, group)]
-          )
-        )
-      : title.components.GroupTitle
-  },
 }
 
 const activeKey = ref('item1')
@@ -51,7 +33,16 @@ const activeKey = ref('item1')
     :groupable="groupable"
     :items="items"
     style="width: 300px"
-  />
+  >
+    <template #title="{ info }">
+      <div>
+        <ElIcon>
+          <Service />
+        </ElIcon>
+        {{ info.name }}
+      </div>
+    </template>
+  </Conversations>
 </template>
 
 <style lang="scss" scoped></style>
