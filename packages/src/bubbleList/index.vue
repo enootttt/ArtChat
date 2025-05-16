@@ -160,9 +160,9 @@ defineExpose({
       :key="bubble.key"
       v-bind="bubble"
       :ref="(node) => getBubbleRefs(node, bubble.key)"
-      :on-typing-complete="() => onTypingCompleteFn(bubble)"
-      :on-update="onBubbleUpdate"
       :typing="initialized ? (bubble.typing as boolean) : false"
+      @typing-complete="onTypingCompleteFn(bubble)"
+      @update="onBubbleUpdate"
     >
       <template v-for="(_slot, slotName) in slots" :key="slotName" #[slotName]="slotProps">
         <slot :name="slotName" :info="{ ...slotProps, ...bubble }" />
