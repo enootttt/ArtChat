@@ -24,7 +24,7 @@ const mergedCls = computed(() => [
     <!-- 左侧图标区域 -->
     <div v-if="$slots.icon || icon" :class="[ns.b('icon'), classNames?.icon]" :style="styles?.icon">
       <slot name="icon">
-        <img v-if="typeof icon === 'string'" :src="icon" alt="欢迎图标" />
+        <img v-if="typeof icon === 'string'" :src="icon" alt="欢迎图标">
         <component :is="icon" v-else />
       </slot>
     </div>
