@@ -1,5 +1,3 @@
-// # copying form ant-design-vue/components/tabs/src/hooks/useSyncState.ts
-
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 
