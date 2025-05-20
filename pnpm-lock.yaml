@@ -135,19 +135,19 @@ importers:
 
     dependencies:
       '@element-plus/icons-vue':
-        specifier: 'catalog:'
+        specifier: ^2.3.1
         version: 2.3.1(vue@3.5.13(typescript@5.8.2))
       '@vueuse/core':
-        specifier: 'catalog:'
+        specifier: ^13.0.0
         version: 13.1.0(vue@3.5.13(typescript@5.8.2))
       element-plus:
-        specifier: 'catalog:'
+        specifier: ^2.9.7
         version: 2.9.7(vue@3.5.13(typescript@5.8.2))
       sass:
-        specifier: 'catalog:'
+        specifier: ~1.56.1
         version: 1.56.2
       vue:
-        specifier: 'catalog:'
+        specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.2)
 
     devDependencies:
