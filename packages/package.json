@@ -4,14 +4,14 @@
   "version": "1.2.8",
   "private": true,
   "packageManager": "pnpm@9.12.3",
-  "description": "借鉴字节开源react库AntX，通过vue实现的版本",
   "license": "MIT",
+  "homepage": "https://mty-ai-md.mtyui.asia",
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/asd1232rq3123/artmate-chat"
+    "url": "https://github.com/enootttt/ArtChat"
   },
   "bugs": {
-    "url": "https://gitee.com/asd1232rq3123/artmate-chat/issues"
+    "url": "https://github.com/enootttt/ArtChat/issues"
   },
   "keywords": [
     "AI",
@@ -49,11 +49,11 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "catalog:",
-    "@vueuse/core": "catalog:",
-    "element-plus": "catalog:",
-    "sass": "catalog:",
-    "vue": "catalog:"
+    "@element-plus/icons-vue": "^2.3.1",
+    "@vueuse/core": "^13.0.0",
+    "element-plus": "^2.9.7",
+    "sass": "~1.56.1",
+    "vue": "^3.5.13"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
