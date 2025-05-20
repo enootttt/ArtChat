@@ -28,13 +28,13 @@
   "exports": {
     ".": {
       "types": "./dist/typings/index.d.ts",
-      "import": "./dist/es/index.js",
-      "require": "./dist/cjs/index.js"
+      "import": "./dist/es/packages/src/index.js",
+      "require": "./dist/cjs/packages/src/index.js"
     },
     "./dist/index.css": "./dist/es/index.css"
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/es/index.js",
+  "main": "./dist/cjs/packages/src/index.js",
+  "module": "./dist/es/packages/src/index.js",
   "types": "./dist/typings/index.d.ts",
   "files": [
     "dist"
