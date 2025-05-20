@@ -1,7 +1,7 @@
 {
   "name": "@artmate/chat",
   "type": "module",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "private": true,
   "packageManager": "pnpm@9.12.3",
   "description": "借鉴字节开源react库AntX，通过vue实现的版本",
