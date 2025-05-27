@@ -4,9 +4,9 @@ export type BubbleDataType = {
   key?: number | string
   role?: string
   [key: string]: any
-} & BubbleProps
+} & BubbleProps<any>
 
-export type RoleType = Partial<Omit<BubbleProps, 'content'>>
+export type RoleType = Partial<Omit<BubbleProps<any>, 'content'>>
 
 export type RolesType =
   | Record<string, RoleType>

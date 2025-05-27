@@ -32,7 +32,7 @@ suggestion/trigger
 
 :::
 
-### SuggestionsProps
+### Suggestions Props
 
 | 属性          | 说明                 | 类型                                                | 默认值 | 版本 |
 | ------------- | -------------------- | --------------------------------------------------- | ------ | ---- |
@@ -50,6 +50,10 @@ type onTrigger<T> = (info: T | false) => void
 ```
 
 Suggestion 接受泛型以自定义传递给 `items` renderProps 的参数类型，当传递 `false` 时，则关闭建议面板。
+
+### Suggestions Exposed
+
+**该组件为泛型组件，获取组件实例类型需使用 `vue-component-type-helpers`**
 
 ### Suggestions Slots
 

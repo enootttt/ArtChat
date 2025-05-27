@@ -163,6 +163,9 @@ importers:
       vite-plugin-dts:
         specifier: ^4.4.0
         version: 4.5.3(@types/node@22.10.2)(rollup@4.39.0)(typescript@5.8.2)(vite@6.2.6(@types/node@22.10.2)(jiti@2.4.2)(sass@1.56.2)(yaml@2.7.1))
+      vue-component-type-helpers:
+        specifier: ^2.2.10
+        version: 2.2.10
 
 packages:
 
@@ -4259,6 +4262,9 @@ packages:
 
   vscode-uri@3.1.0:
     resolution: {integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==}
+
+  vue-component-type-helpers@2.2.10:
+    resolution: {integrity: sha512-iDUO7uQK+Sab2tYuiP9D1oLujCWlhHELHMgV/cB13cuGbG4qwkLHvtfWb6FzvxrIOPDnU0oHsz2MlQjhYDeaHA==}
 
   vue-demi@0.14.10:
     resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
@@ -8785,6 +8791,8 @@ snapshots:
       - yaml
 
   vscode-uri@3.1.0: {}
+
+  vue-component-type-helpers@2.2.10: {}
 
   vue-demi@0.14.10(vue@3.5.13(typescript@5.8.2)):
     dependencies:

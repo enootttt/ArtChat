@@ -4,7 +4,7 @@ import BubbleList from './index.vue'
 
 export type * from './interface'
 
-type BubbleListType = {
+export type BubbleListType = {
   Bubble: typeof Bubble
   Loading: typeof BubbleLoading
 } & typeof BubbleList
