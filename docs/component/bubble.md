@@ -104,6 +104,14 @@ bubble/list-custom
 
 :::
 
+### 选择消息
+
+:::demo 使用 `leading` 插槽配合 `ElCheckbox` 进行消息选择。
+
+bubble/leading-checkbox
+
+:::
+
 <!-- ### 使用 GPT-Vis 渲染图表 (no support)
 
 @antv/GPT-Vis 仅支持 React。
@@ -134,13 +142,14 @@ bubble/gpt-vis
 
 ### Bubble Slots
 
-| 插槽名  | 说明           | 类型 |
-| ------- | -------------- | ---- |
-| avatar  | 头像           | -    |
-| header  | 头部面板       | -    |
-| footer  | 底部内容       | -    |
-| loading | loading 占位   | -    |
-| content | 自定义内容插槽 | -    |
+| 插槽名  | 说明                                   | 参数                                  |
+| ------- | -------------------------------------- | ------------------------------------- |
+| avatar  | 头像                                   | info: BubbleDataType \| index: number |
+| header  | 头部面板                               | info: BubbleDataType \| index: number |
+| footer  | 底部内容                               | info: BubbleDataType \| index: number |
+| loading | loading 占位                           | info: BubbleDataType \| index: number |
+| content | 自定义内容插槽                         | info: BubbleDataType \| index: number |
+| leading | 自定义消息列表每条消息的前缀，如选择框 | info: BubbleDataType \| index: number |
 
 ### Bubble Exposed
 

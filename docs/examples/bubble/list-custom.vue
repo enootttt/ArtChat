@@ -3,7 +3,7 @@ import type { BubbleListProps, PromptProps } from '@artmate/chat'
 import { BubbleList, FileList, Prompts } from '@artmate/chat'
 import { ElButton, ElImage } from 'element-plus'
 import VueNode from './vue-node.vue'
-import { h } from 'vue'
+import { shallowRef, h } from 'vue'
 
 const promptItems: PromptProps[] = [
   {
@@ -62,7 +62,7 @@ const items: BubbleListProps['items'] = [
     key: 2,
     role: 'ai',
     avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-    content: VueNode,
+    content: shallowRef(VueNode),
     messageRender(content) {
       // 使用 h 函数渲染组件内容
       return h(content)
