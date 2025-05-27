@@ -1,4 +1,5 @@
 import type { CSSProperties, VNode } from 'vue'
+import type { AnyObject } from '../_util/type'
 
 export interface TypingOption {
   /**
@@ -15,7 +16,9 @@ export interface TypingOption {
   suffix?: string | null
 }
 
-export interface BubbleProps {
+export type BubbleContentType = string | VNode | AnyObject | number
+
+export interface BubbleProps<ContentType extends BubbleContentType = string> {
   avatar?: string | VNode
   classNames?: {
     avatar?: string
@@ -23,7 +26,7 @@ export interface BubbleProps {
     footer?: string
     header?: string
   }
-  content?: string
+  content?: ContentType
   loading?: boolean
   loadingRender?: () => VNode
   messageRender?: (content: string) => string | VNode

@@ -1,4 +1,5 @@
-import type { Ref, VNode } from 'vue'
+import type { Ref } from 'vue'
+import type { BubbleContentType } from '../interface'
 import { computed, ref, watch, watchEffect } from 'vue'
 
 function isString(str: any): str is string {
@@ -10,12 +11,12 @@ function isString(str: any): str is string {
  * Or return content directly.
  */
 function useTypedEffect(
-  content: Ref<string>,
+  content: Ref<BubbleContentType>,
   typingEnabled: boolean,
   typingStep: number,
   typingInterval: number
-): [typedContent: Ref<() => string | VNode>, isTyping: Ref<boolean>] {
-  const prevContent = ref<string>('')
+): [typedContent: Ref<() => BubbleContentType>, isTyping: Ref<boolean>] {
+  const prevContent = ref<BubbleContentType>('')
   const typingIndex = ref<number>(1)
 
   const mergedTypingEnabled = ref(typingEnabled && isString(content.value))
@@ -53,12 +54,12 @@ function useTypedEffect(
 
   const mergedTypingContent = computed(() => {
     const contentText = mergedTypingEnabled.value
-      ? content.value.slice(0, typingIndex.value)
+      ? (content.value as string).slice(0, typingIndex.value)
       : content.value
     return () => contentText
   })
   const isTyping = computed(
-    () => mergedTypingEnabled.value && typingIndex.value < content.value.length
+    () => mergedTypingEnabled.value && typingIndex.value < (content.value as string).length
   )
 
   return [mergedTypingContent, isTyping]

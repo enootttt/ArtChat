@@ -1,7 +1,7 @@
-<script setup lang="ts">
-import type { Ref, Slots, VNode } from 'vue'
+<script setup lang="ts" generic="T extends BubbleContentType = string">
+import type { Slots } from 'vue'
 
-import type { BubbleProps } from './interface'
+import type { BubbleContentType, BubbleProps } from './interface'
 import { ElAvatar } from 'element-plus'
 
 import { computed, ref, useSlots, watch } from 'vue'
@@ -11,13 +11,13 @@ import useTypedEffect from './hooks/useTypedEffect'
 import useTypingConfig from './hooks/useTypingConfig'
 import Loading from './loading.vue'
 
-const props = withDefaults(defineProps<BubbleProps>(), {
+const props = withDefaults(defineProps<BubbleProps<T>>(), {
   styles: () => ({}),
   placement: 'start',
   loading: false,
   loadingRender: undefined,
   variant: 'filled',
-  content: '',
+  content: undefined,
   avatar: '',
   typing: false,
 })
@@ -36,9 +36,9 @@ const divRef = ref<HTMLDivElement>()
 const [typingEnabled, typingStep, typingInterval, typingSuffix] = useTypingConfig(props.typing)
 
 const contents = computed(() => {
-  return props.content
+  return props.content ?? ''
 })
-const [typedContent, isTyping]: [Ref<() => string | VNode>, Ref<boolean>] = useTypedEffect(
+const [typedContent, isTyping] = useTypedEffect(
   contents,
   typingEnabled as boolean,
   typingStep as number,
@@ -87,6 +87,10 @@ function isString(content: any) {
   return typeof content === 'string'
 }
 
+function renderSlot(): T {
+  return typeof typedContent.value === 'function' ? typedContent.value() as T : typedContent.value
+}
+
 defineExpose({
   nativeElement: divRef,
 })
@@ -103,7 +107,7 @@ defineExpose({
       :class="[ns.b('avatar'), props.classNames?.avatar]"
       :style="props.styles?.avatar"
     >
-      <slot name="avatar">
+      <slot name="avatar" :content="renderSlot()">
         <ElAvatar v-if="typeof avatar === 'string'" :size="32" :src="avatar" />
         <component :is="avatar" v-else />
       </slot>
@@ -114,7 +118,7 @@ defineExpose({
         :class="[ns.b('header'), props.classNames?.header]"
         :style="props.styles?.header"
       >
-        <slot name="header" />
+        <slot name="header" :content="renderSlot()" />
       </div>
       <div
         :class="[
@@ -132,7 +136,7 @@ defineExpose({
         </template>
         <template v-else>
           <!-- 根据 mergedContent 类型选择渲染方式 -->
-          <slot name="content">
+          <slot name="content" :content="renderSlot()">
             <component :is="mergeContent" v-if="!isString(mergeContent)" />
             <template v-else>
               <div v-html="mergeContent" />
@@ -150,7 +154,7 @@ defineExpose({
         :class="[ns.b('footer'), props.classNames?.footer]"
         :style="props.styles?.footer"
       >
-        <slot name="footer" />
+        <slot name="footer" :content="renderSlot()" />
       </div>
     </div>
     <template v-else>
@@ -169,7 +173,7 @@ defineExpose({
           <Loading v-else :prefix-cls="ns.b()" />
         </template>
         <template v-else>
-          <slot name="content">
+          <slot name="content" :content="renderSlot()">
             <!-- 根据 mergedContent 类型选择渲染方式 -->
             <component :is="mergeContent" v-if="!isString(mergeContent)" />
             <template v-else>
