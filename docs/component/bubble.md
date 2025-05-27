@@ -48,6 +48,14 @@ bubble/typing
 
 :::
 
+### 自定义渲染内容
+
+:::demo 通过传入 `content` 插槽自定义渲染内容。
+
+bubble/custom-content
+
+:::
+
 ### 自定义渲染
 
 :::demo 配合 `markdown-it` 实现自定义渲染内容。
@@ -96,7 +104,7 @@ bubble/list-custom
 
 :::
 
-### 使用 GPT-Vis 渲染图表 (no support)
+<!-- ### 使用 GPT-Vis 渲染图表 (no support)
 
 @antv/GPT-Vis 仅支持 React。
 
@@ -104,7 +112,7 @@ bubble/list-custom
 
 bubble/gpt-vis
 
-:::
+::: -->
 
 ### Bubble
 
@@ -133,6 +141,14 @@ bubble/gpt-vis
 | footer  | 底部内容       | -    |
 | loading | loading 占位   | -    |
 | content | 自定义内容插槽 | -    |
+
+### Bubble Exposed
+
+**该组件为泛型组件，获取组件实例类型需使用 `vue-component-type-helpers`**
+
+| 属性名        | 说明         | 类型        |
+| ------------- | ------------ | ----------- |
+| nativeElement | 获取原生节点 | HTMLElement |
 
 ### Bubble.List
 
