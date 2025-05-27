@@ -8,4 +8,9 @@ $prefix: 'bubble-list' !default;
   flex-direction: column;
   gap: $padding;
   overflow-y: auto;
+
+  &-leading {
+    float: left;
+    margin-right: $padding-xs;
+  }
 }

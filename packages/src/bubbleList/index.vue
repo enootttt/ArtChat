@@ -18,11 +18,12 @@ const props = withDefaults(defineProps<BubbleListProps>(), {
 })
 
 const slots = defineSlots<{
-  avatar?: (slotProps: { info: BubbleDataType }) => void
-  header?: (slotProps: { info: BubbleDataType }) => void
-  loading?: (slotProps: { info: BubbleDataType }) => void
-  footer?: (slotProps: { info: BubbleDataType }) => void
-  content?: (slotProps: { info: BubbleDataType }) => void
+  leading?: (slotProps: { info: BubbleDataType }, index: number) => void
+  avatar?: (slotProps: { info: BubbleDataType }, index: number) => void
+  header?: (slotProps: { info: BubbleDataType }, index: number) => void
+  loading?: (slotProps: { info: BubbleDataType }, index: number) => void
+  footer?: (slotProps: { info: BubbleDataType }, index: number) => void
+  content?: (slotProps: { info: BubbleDataType }, index: number) => void
 }>()
 
 const ns = useNamespace('bubble-list')
@@ -129,10 +130,7 @@ function scrollTo({ key, offset, behavior = 'smooth', block }: scrollTopParamete
   }
 }
 
-function getBubbleRefs(
-  node: Component<BubbleType> | null,
-  key: number | string | undefined
-) {
+function getBubbleRefs(node: Component<BubbleType> | null, key: number | string | undefined) {
   if (key === null || key === undefined) return
   if (node) {
     Reflect.set(bubbleRefs.value, key, node)
@@ -159,19 +157,22 @@ defineExpose({
     :class="[ns.b(), rootClassName, className, scrollReachEnd && ns.b('reach-end')]"
     @scroll="onInternalScroll"
   >
-    <Bubble
-      v-for="bubble in displayData"
-      :key="bubble.key"
-      v-bind="bubble"
-      :ref="(node) => getBubbleRefs(node, bubble.key)"
-      :typing="initialized ? (bubble.typing as boolean) : false"
-      @typing-complete="onTypingCompleteFn(bubble)"
-      @update="onBubbleUpdate"
-    >
-      <template v-for="(_slot, slotName) in slots" :key="slotName" #[slotName]="slotProps">
-        <slot :name="slotName" :info="{ ...(slotProps as BubbleDataType), ...bubble }" />
-      </template>
-    </Bubble>
+    <div v-for="(bubble, index) in displayData" :key="bubble.key">
+      <div v-if="slots.leading" :class="ns.b('leading')">
+        <slot name="leading" :info="bubble" :index="index"></slot>
+      </div>
+      <Bubble
+        v-bind="bubble"
+        :ref="(node) => getBubbleRefs(node, bubble.key)"
+        :typing="initialized ? (bubble.typing as boolean) : false"
+        @typing-complete="onTypingCompleteFn(bubble)"
+        @update="onBubbleUpdate"
+      >
+        <template v-for="(_slot, slotName) in slots" :key="slotName" #[slotName]="slotProps">
+          <slot :name="slotName" :info="{ ...(slotProps as BubbleDataType), ...bubble }" :index="index" />
+        </template>
+      </Bubble>
+    </div>
   </div>
 </template>
 
