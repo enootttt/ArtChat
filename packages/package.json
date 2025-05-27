@@ -59,6 +59,7 @@
     "@vitejs/plugin-vue": "^5.2.1",
     "rollup": "^4.34.8",
     "vite": "^6.0.3",
-    "vite-plugin-dts": "^4.4.0"
+    "vite-plugin-dts": "^4.4.0",
+    "vue-component-type-helpers": "^2.2.10"
   }
 }
