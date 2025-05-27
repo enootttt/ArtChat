@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
 
+import type { BubbleContentType } from '..//bubble/interface'
+import type { GenericComponentExports } from '../_util/type'
 import type { ListItemType } from './hooks/useListData'
-import type { BubbleDataType, BubbleListProps, scrollTopParameters } from './interface'
 
+import type { BubbleDataType, BubbleListProps, scrollTopParameters } from './interface'
 import { nextTick, onMounted, ref, watch } from 'vue'
 import Bubble from '../bubble/index.vue'
 import { useNamespace } from '../hooks/useNamespace'
@@ -30,7 +32,9 @@ const initialized = ref(true)
 const scrollReachEnd = ref(false)
 const updateCount = ref(0)
 const listRef = ref<HTMLElement>()
-const bubbleRefs = ref<Record<string, InstanceType<typeof Bubble>>>({})
+type BubbleType = GenericComponentExports<typeof Bubble<BubbleContentType>>
+
+const bubbleRefs = ref<Record<string, BubbleType>>({})
 const { ListData, setListData } = useListData(props.items, props.roles)
 const [displayData, onTypingComplete, ItemsWatch] = useDisplayData(ListData)
 
@@ -117,7 +121,7 @@ function scrollTo({ key, offset, behavior = 'smooth', block }: scrollTopParamete
       scrollReachEnd.value = index === displayData.value.length - 1
 
       // Do native scroll
-      bubbleInst.$el.scrollIntoView({
+      bubbleInst.nativeElement!.scrollIntoView({
         behavior,
         block,
       })
@@ -126,7 +130,7 @@ function scrollTo({ key, offset, behavior = 'smooth', block }: scrollTopParamete
 }
 
 function getBubbleRefs(
-  node: Component<InstanceType<typeof Bubble>> | null,
+  node: Component<BubbleType> | null,
   key: number | string | undefined
 ) {
   if (key === null || key === undefined) return
@@ -165,7 +169,7 @@ defineExpose({
       @update="onBubbleUpdate"
     >
       <template v-for="(_slot, slotName) in slots" :key="slotName" #[slotName]="slotProps">
-        <slot :name="slotName" :info="{ ...slotProps, ...bubble }" />
+        <slot :name="slotName" :info="{ ...(slotProps as BubbleDataType), ...bubble }" />
       </template>
     </Bubble>
   </div>
