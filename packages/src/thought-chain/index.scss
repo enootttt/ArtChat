@@ -164,30 +164,6 @@ $colors: (
 @include b($prefix-item) {
   $component-prefix: &;
 
-  @at-root {
-    @each $key, $value in $colors {
-      $statusColor: map-get($colors, $key);
-
-      @each $nextStatus in map-keys($colors) {
-        @include b(#{$prefix-item}-#{$key}-#{$nextStatus}) {
-          #{$component-prefix}-icon,
-          & > *::before {
-            background-color: $statusColor;
-          }
-
-          & > :last-child::before {
-            @if $key == $nextStatus {
-              /** 无样式更改 */
-            } @else {
-              background: linear-gradient($statusColor, map-get($colors, $nextStatus));
-              background-color: none !important;
-            }
-          }
-        }
-      }
-    }
-  }
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -313,6 +289,28 @@ $colors: (
       width: 2px;
       content: '';
       background-color: rgb(var(--light), 0.25);
+    }
+  }
+
+  @at-root {
+    @each $key, $value in $colors {
+      $statusColor: map-get($colors, $key);
+
+      @each $nextStatus in map-keys($colors) {
+        @include b(#{$prefix-item}-#{$key}-#{$nextStatus}) {
+          #{$component-prefix}-icon,
+          & > *::before {
+            background-color: $statusColor;
+          }
+
+          & > :last-child::before {
+            @if $key != $nextStatus {
+              background: linear-gradient($statusColor, map-get($colors, $nextStatus));
+              background-color: none !important;
+            }
+          }
+        }
+      }
     }
   }
 }
