@@ -20,4 +20,4 @@ jobs:
           cache: "pnpm"
       - run: pnpm install
       - run: pnpm lint
-      - run: pnpm build:packages
+      - run: pnpm build:docs
