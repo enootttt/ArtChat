@@ -1,6 +1,6 @@
 export default {
   extends: ['stylelint-config-standard', 'stylelint-config-recommended-scss', 'stylelint-config-recess-order'],
-  ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts', '**/*.json', '**/*.md'],
+  ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts', '**/*.json', '**/*.md', '**/dist/**'],
   plugins: [
     'stylelint-order',
     '@stylistic/stylelint-plugin',
@@ -21,6 +21,7 @@ export default {
           'media',
           'for',
           'at-root',
+          'extend',
           'tailwind',
           'apply',
           'variants',
@@ -45,7 +46,6 @@ export default {
       [
         'dollar-variables',
         'custom-properties',
-        'at-rules',
         'declarations',
         {
           name: 'supports',
@@ -108,7 +108,6 @@ export default {
         ignorePseudoClasses: ['deep'],
       },
     ],
-    'at-rule-no-unknown': null,
     'scss/at-extend-no-missing-placeholder': null,
     'keyframes-name-pattern': null,
     'declaration-property-value-no-unknown': null,
