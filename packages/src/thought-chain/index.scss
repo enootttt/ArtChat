@@ -306,7 +306,7 @@ $colors: (
           & > :last-child::before {
             @if $key != $nextStatus {
               background: linear-gradient($statusColor, map-get($colors, $nextStatus));
-              background-color: none !important;
+              background-color: transparent !important;
             }
           }
         }
