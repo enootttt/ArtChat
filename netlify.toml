@@ -1,5 +1,5 @@
 ## history 路由模式
 [[redirects]]
-  form = "/"
+  from = "/"
   to = "/index.html"
   status = 200
