@@ -16,7 +16,6 @@ $prefix-card: 'attachment-list-card' !default;
   line-height: $line-height;
   color: var(--color-text);
   scrollbar-width: none;
-  background: var(--color-bg-container);
   -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
