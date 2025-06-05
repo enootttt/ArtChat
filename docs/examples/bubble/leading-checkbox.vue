@@ -39,7 +39,7 @@ const items = computed<BubbleListProps['items']>(() =>
 
 const selectList = ref<Array<string | number | undefined>>([])
 
-const selectCheckbox = (key: string | number | undefined) => {
+function selectCheckbox(key: string | number | undefined) {
   console.log(key)
   if (selectList.value.includes(key)) {
     selectList.value = selectList.value.filter((item) => item !== key)
