@@ -159,7 +159,7 @@ defineExpose({
   >
     <div v-for="(bubble, index) in displayData" :key="bubble.key">
       <div v-if="slots.leading" :class="ns.b('leading')">
-        <slot name="leading" :info="bubble" :index="index"></slot>
+        <slot name="leading" :info="bubble" :index="index" />
       </div>
       <Bubble
         v-bind="bubble"
