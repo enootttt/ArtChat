@@ -50,5 +50,5 @@ jobs:
           publish: pnpm changeset publish # 执行实际发布命令
           createGithubReleases: false # 不自动创建 GitHub Release
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
