@@ -43,12 +43,12 @@ const selectList = ref<Array<string>>([])
 const checkAll = ref(false)
 const isIndeterminate = ref(false)
 
-function handleCheckAllChange(val: CheckboxValueType) {
+function selectAllChange(val: CheckboxValueType) {
   selectList.value = val ? items.value.map((item) => item.key as string) : []
   isIndeterminate.value = false
 }
 
-function handleCheckedCitiesChange(value: CheckboxValueType[]) {
+function selectBubbleChange(value: CheckboxValueType[]) {
   const checkedCount = value.length
   checkAll.value = checkedCount === items.value.length
   isIndeterminate.value = checkedCount > 0 && checkedCount < items.value.length
@@ -61,12 +61,12 @@ function handleCheckedCitiesChange(value: CheckboxValueType[]) {
       <ElCheckbox
         v-model="checkAll"
         :indeterminate="isIndeterminate"
-        @change="handleCheckAllChange"
+        @change="selectAllChange"
       >
         全选
       </ElCheckbox>
     </div>
-    <ElCheckboxGroup v-model="selectList" @change="handleCheckedCitiesChange">
+    <ElCheckboxGroup v-model="selectList" @change="selectBubbleChange">
       <BubbleList
         ref="BubbleListRef"
         :items="items"
