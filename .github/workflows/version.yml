@@ -1,0 +1,41 @@
+name: Version
+
+on:
+  push:
+    tags:
+      - 'artChat@*'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: write-all
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23
+
+      - name: Install dependencies
+        run: |
+          npm i -g pnpm
+          pnpm install
+
+      - name: Create Release Pull Request
+        id: create_release
+        uses: changesets/action@v1
+        with:
+          version: pnpm run pub:version # 自定义版本命令
+          commit: 'chore: update versions' # 提交信息
+          title: 'chore: update versions' # PR 标题
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
