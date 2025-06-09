@@ -140,13 +140,15 @@ function getBubbleRefs(node: Component<BubbleType> | null, key: number | string 
 }
 
 onMounted(() => {
-  nextTick(() => {
-    scrollTo({ offset: listRef.value!.scrollHeight, behavior: 'auto' })
-  })
+  if (props.autoScroll) {
+    setTimeout(() => {
+      scrollTo({ offset: listRef.value!.scrollHeight, behavior: 'auto' })
+    })
+  }
 })
 
 defineExpose({
-  nativeElement: listRef.value,
+  nativeElement: listRef,
   scrollTo,
 })
 </script>
@@ -169,7 +171,11 @@ defineExpose({
         @update="onBubbleUpdate"
       >
         <template v-for="(_slot, slotName) in slots" :key="slotName" #[slotName]="slotProps">
-          <slot :name="slotName" :info="{ ...(slotProps as BubbleDataType), ...bubble }" :index="index" />
+          <slot
+            :name="slotName"
+            :info="{ ...(slotProps as BubbleDataType), ...bubble }"
+            :index="index"
+          />
         </template>
       </Bubble>
     </div>
