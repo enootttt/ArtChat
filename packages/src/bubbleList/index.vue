@@ -43,6 +43,9 @@ watch(
   () => props.items,
   () => {
     setListData(props.items)
+  },
+  {
+    deep: true
   }
 )
 
