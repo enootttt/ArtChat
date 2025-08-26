@@ -52,15 +52,20 @@ defineExpose({
       drag
     >
       <div :class="[ns.b('inner')]">
-        <div :class="[ns.b('icon')]">
-          <slot name="icon" />
-        </div>
-        <div :class="[ns.b('title')]">
-          <slot name="title" />
-        </div>
-        <div :class="[ns.b('description')]">
-          <slot name="description" />
-        </div>
+        <template v-if="$slots.default">
+          <slot />
+        </template>
+        <template v-else>
+          <div :class="[ns.b('icon')]">
+            <slot name="icon" />
+          </div>
+          <div :class="[ns.b('title')]">
+            <slot name="title" />
+          </div>
+          <div :class="[ns.b('description')]">
+            <slot name="description" />
+          </div>
+        </template>
       </div>
     </ElUpload>
   </div>
