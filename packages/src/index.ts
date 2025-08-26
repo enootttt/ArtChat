@@ -1,5 +1,8 @@
 import './styles/index.scss'
 
+export * from './actions'
+export type * from './actions'
+
 export { default as ArtRequest } from './artRequest'
 export type * from './artRequest'
 

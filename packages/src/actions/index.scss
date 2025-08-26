@@ -1,0 +1,72 @@
+@import '../theme/index';
+@import '../theme/mixin';
+
+$prefix: 'actions' !default;
+
+%item-style {
+  padding: 0;
+  line-height: var(--line-height);
+
+  &-icon {
+    font-size: var(--font-size-lg);
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+@include b($prefix) {
+  &-list {
+    display: inline-flex;
+    flex-direction: row;
+    gap: var(--padding-xs);
+    color: var(--color-text-description);
+
+    &-item,
+    &-sub-item {
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--control-height-sm);
+      height: var(--control-height-sm);
+      padding: var(--padding-xxs);
+      cursor: pointer;
+      border-radius: var(--border-radius);
+
+      &-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        font-size: var(--font-size);
+      }
+
+      &:hover {
+        background: var(--color-bg-text-hover);
+      }
+    }
+  }
+
+  .border {
+    gap: var(--padding-sm);
+    padding: var(--padding-xs) var(--padding-sm);
+    color: var(--color-text);
+    background-color: var(--border-secondary);
+    border-radius: calc(var(--border-radius-lg) * 1.5);
+
+    @include b(#{$prefix}-list-item) {
+      @extend %item-style;
+    }
+
+    @include b(#{$prefix}-list-sub-item) {
+      @extend %item-style;
+    }
+  }
+
+  .block {
+    display: flex;
+  }
+}
