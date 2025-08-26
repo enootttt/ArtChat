@@ -24,6 +24,10 @@ $prefix: 'attachment' !default;
       border-width: 0;
     }
   }
+
+  .el-upload__input {
+    display: none;
+  }
 }
 
 @include b(#{$prefix}) {
