@@ -123,32 +123,17 @@ $prefix-card: 'attachment-list-card' !default;
   }
 }
 
-[class*='#{$prefix-root}'] {
-  &:dir(ltr) {
-    @include b(#{$prefix}-overflow-ping-start) {
-      @include b(#{$prefix}-prev-btn) {
-        pointer-events: auto;
-        opacity: 1;
-      }
-    }
-
-    @include b(#{$prefix}-overflow-ping-end) {
-      @include b(#{$prefix}-next-btn) {
-        pointer-events: auto;
-        opacity: 1;
-      }
-    }
+@include b(#{$prefix}-overflow-ping-start) {
+  @include b(#{$prefix}-prev-btn) {
+    pointer-events: auto;
+    opacity: 1;
   }
+}
 
-  &:dir(rtl) {
-    #{$prefix}-overflow-ping-end #{$prefix}-prev-btn {
-      pointer-events: auto;
-      opacity: 1;
-    }
-    #{$prefix}-overflow-ping-start #{$prefix}-next-btn {
-      pointer-events: auto;
-      opacity: 1;
-    }
+@include b(#{$prefix}-overflow-ping-end) {
+  @include b(#{$prefix}-next-btn) {
+    pointer-events: auto;
+    opacity: 1;
   }
 }
 
@@ -226,8 +211,10 @@ $prefix-card: 'attachment-list-card' !default;
       width: 100%;
       height: 100%;
       vertical-align: top;
+      user-select: none;
       object-fit: cover;
       border-radius: inherit;
+      -webkit-user-drag: none;
     }
     #{$component-prefix}-img-mask {
       position: absolute;
