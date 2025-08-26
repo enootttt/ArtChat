@@ -159,15 +159,7 @@ defineExpose({
         :upload="mergedUploadProps"
         type="drop"
       >
-        <template #icon>
-          <slot />
-        </template>
-        <template #title>
-          <slot name="title" />
-        </template>
-        <template #description>
-          <slot name="description" />
-        </template>
+        <slot name="drop" />
       </PlaceholderUploader>
     </DropArea>
   </div>
