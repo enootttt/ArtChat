@@ -31,7 +31,7 @@ export default defineConfig({
     plugins: [MarkdownTransform() as any],
   },
   markdown: {
-    config: md => mdPlugin(md),
+    config: (md) => mdPlugin(md),
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -77,6 +77,10 @@ export default defineConfig({
       {
         text: '确认',
         items: [{ text: 'ThoughtChain 思维链', link: '/component/thought-chain' }],
+      },
+      {
+        text: '反馈',
+        items: [{ text: 'Actions 操作列表', link: '/component/actions' }],
       },
       {
         text: '工具',
