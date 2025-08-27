@@ -17,7 +17,7 @@ export default defineConfig({
       ],
     },
     ssr: {
-      noExternal: ['element-plus', '@element-plus/icons-vue'], // 避免打包为 CommonJS
+      noExternal: ['element-plus', '@element-plus/icons-vue', '@artmate/chat'], // 避免打包为 CommonJS
     },
     build: {
       rollupOptions: {
@@ -93,6 +93,9 @@ export default defineConfig({
       },
     ],
 
-    socialLinks: [{ icon: 'gitee', link: 'https://gitee.com/asd1232rq3123/artmate-chat' }],
+    socialLinks: [
+      { icon: 'gitee', link: 'https://gitee.com/asd1232rq3123/artmate-chat' },
+      { icon: 'github', link: 'https://github.com/enootttt/ArtChat' },
+    ],
   },
 })
