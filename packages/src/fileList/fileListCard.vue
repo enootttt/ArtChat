@@ -172,7 +172,7 @@ const isImgPreview = computed(() => isImg.value && (props.item?.file || previewU
     ]"
   >
     <template v-if="isImgPreview">
-      <ElImage v-if="previewUrl" :src="previewUrl" alt="preview" :preview-src-list="[previewUrl]" preview-teleported hide-on-click-modal loading="lazy" />
+      <ElImage v-if="previewUrl" :class="[ns.b('image')]" :src="previewUrl" fit="cover" alt="preview" :preview-src-list="[previewUrl]" preview-teleported hide-on-click-modal loading="lazy" />
       <div
         v-if="props.item?.status && props.item?.status !== 'ready'"
         :class="[`${ns.b('img-mask')}`]"
