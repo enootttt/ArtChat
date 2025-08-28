@@ -36,11 +36,12 @@ actions/variant
 
 ### ActionsProps
 
-| 属性    | 说明                 | 类型                     | 默认值     | 版本 |
-| ------- | -------------------- | ------------------------ | ---------- | ---- |
-| items   | 包含多个操作项的列表 | ActionItem[]             | -          | -    |
-| variant | 样式变体             | 'borderless' \| 'border' | borderless | -    |
-| trigger | 子操作项触发方式     | 'hover' \| 'click'       | hover      | -    |
+| 属性      | 说明                 | 类型                                                                              | 默认值     | 版本 |
+| --------- | -------------------- | --------------------------------------------------------------------------------- | ---------- | ---- |
+| items     | 包含多个操作项的列表 | ActionItem[]                                                                      | -          | -    |
+| variant   | 样式变体             | 'borderless' \| 'border'                                                          | borderless | -    |
+| trigger   | 子操作项触发方式     | 'hover' \| 'click'                                                                | hover      | -    |
+| placement | 子操作项弹出位置     | 与[tooltip](https://element-plus.org/zh-CN/component/tooltip.html#attributes)一致 | top        | -    |
 
 ### ItemType
 
