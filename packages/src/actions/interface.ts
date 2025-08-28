@@ -80,9 +80,25 @@ export interface ActionsProps {
    */
   variant?: 'borderless' | 'border'
   /**
-   *
+   * @desc 触发方式
+   * @descEN Trigger mode.
+   * @default 'hover'
    */
   trigger?: 'hover' | 'click'
+
+  placement?:
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
 }
 
 export interface ActionsEmits {

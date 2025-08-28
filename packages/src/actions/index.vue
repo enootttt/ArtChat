@@ -9,6 +9,7 @@ import ActionMenu from './ActionMenu.vue'
 
 withDefaults(defineProps<ActionsProps>(), {
   trigger: 'hover',
+  placement: 'top'
 })
 
 const emits = defineEmits<ActionsEmits>()
@@ -52,7 +53,7 @@ function handleItemClick(key: string, item: ActionItem) {
             <div :class="ns.b('list-item-icon')">
               <slot name="icon" :info="item">
                 <template v-if="item.icon">
-                  <ElTooltip :content="item.label">
+                  <ElTooltip :content="item.label" :disabled="!item.label" :placement="placement">
                     <ElIcon>
                       <component :is="item.icon" />
                     </ElIcon>
