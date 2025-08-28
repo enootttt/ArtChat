@@ -299,4 +299,9 @@ $prefix-card: 'attachment-list-card' !default;
       border-inline-width: 0;
     }
   }
+
+  &-image {
+    width: 100%;
+    height: 100%;
+  }
 }
