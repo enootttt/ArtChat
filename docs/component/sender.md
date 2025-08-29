@@ -40,6 +40,14 @@ sender/speechCustom
 
 ::: -->
 
+### 前置提示
+
+:::demo 使用 `tip` 添加一个悬浮在输入框前方的提示。
+
+sender/tip
+
+:::
+
 ### 展开面板
 
 :::demo 使用 `header` 自定义文件上传示例。
@@ -107,6 +115,7 @@ type SemanticType = 'actions' | 'input' | 'prefix';
 | components | 自定义组件,会覆盖内置input组件 |
 | actions    | 操作按钮                       |
 | prefix     | 前缀内容                       |
+| tip        | 提示区域                       |
 
 ### SenderHeader
 

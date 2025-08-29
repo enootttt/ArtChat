@@ -35,7 +35,7 @@ function submit() {
 
 <template>
   <ElSpace style="width: 100%" direction="vertical" fill>
-    <Sender v-model="value">
+    <Sender v-model="value" placeholder="Please input your message...">
       <template #actions>
         <ElButton circle type="primary" :disabled="!value && !loading" @click="submit">
           <ElIcon v-if="!loading" color="white">
