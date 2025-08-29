@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { SenderProps } from './interface'
 
+import { useElementSize } from '@vueuse/core'
 import { ElInput } from 'element-plus'
-import { ref } from 'vue'
 
+import { ref, watch } from 'vue'
 import ArtCollapseTransition from '../collapseTransition/index.vue'
 import { useNamespace } from '../hooks/useNamespace'
 
@@ -29,11 +30,27 @@ const slots = defineSlots<{
   components?: () => void
   prefix?: () => void
   actions?: () => void
+  tip?: () => void
 }>()
 
 const ns = useNamespace('sender')
 
 const inputRef = ref<InstanceType<typeof ElInput>>()
+
+// ------------------- Tip 插槽处理 -------------------
+const inputTip = ref<HTMLElement>()
+const { width: TipWidth } = useElementSize(inputTip)
+
+watch(TipWidth, (newVal) => {
+  const target = inputRef.value?.$el as HTMLElement
+  const nodes = target.children
+  const input = Array.from(nodes).find(node => node.tagName === 'TEXTAREA') as HTMLInputElement | undefined
+  if (input) {
+    input.style.textIndent = `${newVal + 8}px`
+  }
+})
+
+// ------------------- End -------------------
 
 function triggerValueChange(nextValue: string) {
   emit('change', nextValue)
@@ -88,21 +105,25 @@ defineExpose({
         <slot name="prefix" />
       </div>
       <slot name="components">
-        <ElInput
-          ref="inputRef"
-          :autosize="autoSize || { maxRows: 8 }"
-          :class="[ns.b('input'), classNames?.input]"
-          :disabled="disabled"
-          :model-value="modelValue"
-          :readonly="readOnly"
-          :placeholder="props.placeholder"
-          resize="none"
-          type="textarea"
-          v-bind="$attrs"
-          @change="InputChangeFn"
-          @keydown="(e) => onInternalKeyPress(e as KeyboardEvent)"
-          @update:model-value="emit('update:modelValue', $event)"
-        />
+        <div :class="[ns.b('input'), classNames?.input]">
+          <div v-if="slots.tip" ref="inputTip" :class="ns.b('input-tip')">
+            <slot name="tip" />
+          </div>
+          <ElInput
+            ref="inputRef"
+            :autosize="autoSize || { maxRows: 8 }"
+            :disabled="disabled"
+            :model-value="modelValue"
+            :readonly="readOnly"
+            :placeholder="props.placeholder"
+            resize="none"
+            type="textarea"
+            v-bind="$attrs"
+            @change="InputChangeFn"
+            @keydown="(e) => onInternalKeyPress(e as KeyboardEvent)"
+            @update:model-value="emit('update:modelValue', $event)"
+          />
+        </div>
       </slot>
       <div v-if="slots.actions" :class="[ns.b('actions-list'), classNames?.actions]">
         <slot name="actions" />

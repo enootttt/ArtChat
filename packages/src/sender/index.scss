@@ -37,6 +37,7 @@ $prefix: 'sender' !default;
   padding-inline: $padding $padding-sm;
 
   @include b(#{$prefix}-input) {
+    position: relative;
     box-sizing: border-box;
     display: inline-block;
     flex: auto;
@@ -67,6 +68,11 @@ $prefix: 'sender' !default;
 
     &:focus {
       border: none !important;
+    }
+
+    &-tip {
+      position: absolute;
+      z-index: 2;
     }
   }
 
