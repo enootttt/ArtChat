@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SenderProps } from './interface'
 
-import { useElementSize } from '@vueuse/core'
+import { useElementSize, useEventListener } from '@vueuse/core'
 import { ElInput } from 'element-plus'
 
 import { ref, watch } from 'vue'
@@ -41,16 +41,25 @@ const inputRef = ref<InstanceType<typeof ElInput>>()
 const inputTip = ref<HTMLElement>()
 const { width: TipWidth } = useElementSize(inputTip)
 
-watch(TipWidth, (newVal) => {
-  const target = inputRef.value?.$el as HTMLElement | undefined
-  if (!target) return
-  const textarea = target.querySelector('textarea')
-  if (textarea) {
-    textarea.style.textIndent = `${newVal + 8}px`
+watch(
+  TipWidth,
+  (newVal) => {
+    const target = inputRef.value?.$el as HTMLElement | undefined
+    if (!target) return
+    const textarea = target.querySelector('textarea')
+    if (textarea && newVal) {
+      textarea.style.textIndent = `${newVal + 8}px`
+      useEventListener(textarea, 'scroll', () => {
+        if (inputTip.value) {
+          inputTip.value.style.transform = `translateY(-${textarea.scrollTop}px)`
+        }
+      })
+    }
+  },
+  {
+    flush: 'post',
   }
-}, {
-  flush: 'post'
-})
+)
 
 // ------------------- End -------------------
 
