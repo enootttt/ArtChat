@@ -13,6 +13,7 @@
     "lint:style": "stylelint packages/**/*.{scss,css} --fix",
     "lint:prettier": "prettier --write packages/**/*.{ts,js,vue,scss,css,json,md}",
     "lint:lint-staged": "lint-staged",
+    "pub:changeset": "changeset",
     "pub:version": "changeset version",
     "prepare": "husky",
     "commit": "git-cz"
