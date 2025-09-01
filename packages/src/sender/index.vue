@@ -42,12 +42,14 @@ const inputTip = ref<HTMLElement>()
 const { width: TipWidth } = useElementSize(inputTip)
 
 watch(TipWidth, (newVal) => {
-  const target = inputRef.value?.$el as HTMLElement
-  const nodes = target.children
-  const input = Array.from(nodes).find(node => node.tagName === 'TEXTAREA') as HTMLInputElement | undefined
-  if (input) {
-    input.style.textIndent = `${newVal + 8}px`
+  const target = inputRef.value?.$el as HTMLElement | undefined
+  if (!target) return
+  const textarea = target.querySelector('textarea')
+  if (textarea) {
+    textarea.style.textIndent = `${newVal + 8}px`
   }
+}, {
+  flush: 'post'
 })
 
 // ------------------- End -------------------
