@@ -1,6 +1,6 @@
-import type { ArtReadableStream, ArtStreamOptions, SSEOutput } from '../artStream'
+import type { ArtReadableStream, ArtStreamOptions, SSEOutput } from '../../../sdk/src/artStream'
 import { ref, shallowRef } from 'vue'
-import ArtStream from '../artStream'
+import ArtStream from '../../../sdk/src/artStream'
 
 export function useXStream() {
   const data = ref<SSEOutput[]>([])

@@ -1,26 +1,22 @@
-export interface ArtFetchMiddlewares {
-  onRequest?: (...ags: Parameters<typeof fetch>) => Promise<Parameters<typeof fetch>>
+import type { ArtRequestOptions } from '.'
+
+export interface ArtFetchMiddlewares<Input, Output> {
+  onRequest?: (
+    baseURL: Parameters<typeof fetch>[0],
+    options: ArtRequestOptions<Input, Output>
+  ) => Promise<[Parameters<typeof fetch>[0], ArtRequestOptions<Input, Output>]>
   onResponse?: (response: Response) => Promise<Response>
 }
 
-export interface ArtFetchOptions extends RequestInit {
-  /**
-   * @description A typeof fetch function
-   * @default globalThis.fetch
-   */
-  fetch?: typeof fetch
-  /**
-   * @description Middleware for request and response
-   */
-  middlewares?: ArtFetchMiddlewares
-}
-
-export type ArtFetchType = (
+export type ArtFetchType<Input, Output> = (
   baseURL: Parameters<typeof fetch>[0],
-  options?: ArtFetchOptions
+  options?: ArtRequestOptions<Input, Output>
 ) => Promise<Response>
 
-const ArtFetch: ArtFetchType = async (baseURL, options = {}) => {
+async function ArtFetch<Input, Output>(
+  baseURL: Parameters<typeof fetch>[0],
+  options: ArtRequestOptions<Input, Output> = {}
+) {
   const { fetch: fetchFn = globalThis.fetch, middlewares = {}, ...requestInit } = options
 
   if (typeof fetchFn !== 'function') {
@@ -28,7 +24,10 @@ const ArtFetch: ArtFetchType = async (baseURL, options = {}) => {
   }
 
   /** ---------------------- request init ---------------------- */
-  let fetchArgs: Parameters<typeof fetch> = [baseURL, requestInit]
+  let fetchArgs: [Parameters<typeof fetch>[0], ArtRequestOptions<Input, Output>] = [
+    baseURL,
+    requestInit,
+  ]
 
   /** ---------------------- request middleware ---------------------- */
   if (typeof middlewares.onRequest === 'function') {

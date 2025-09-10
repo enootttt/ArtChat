@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["dom", "es2020"],
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "module": "esnext",
+    "moduleResolution": "Bundler",
+    "resolvePackageJsonExports": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "declaration": true,
+    "stripInternal": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["**/*", "../sdk/src/artStream", "../sdk/src/artRequest"],
+  "exclude": ["node_modules", "lib", "es"]
+}

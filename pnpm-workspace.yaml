@@ -1,7 +1,7 @@
 packages:
   - internal/*
   - docs
-  - packages
+  - packages/*
 
 # 定义目录和依赖版本号
 catalog:

@@ -50,7 +50,7 @@ function splitStream() {
       })
 
       // 将最后一个未完成的部分保存回缓冲区，用于下一个块
-      buffer = parts[parts.length - 1] as string
+      buffer = parts[parts.length - 1]
     },
     flush(controller) {
       // 如果缓冲区中还有剩余数据，将其作为最后一部分排队
@@ -149,7 +149,10 @@ function ArtStream<Output = SSEOutput>(options: ArtStreamOptions<Output>) {
   }
 
   // 默认编码是 "utf-8"
-  const decoderStream = new TextDecoderStream()
+  const decoderStream = new TextDecoderStream() as ReadableWritablePair<
+    string,
+    Uint8Array<ArrayBufferLike>
+  >
 
   const stream = (
     transformStream

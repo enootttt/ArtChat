@@ -1,0 +1,31 @@
+{
+  "name": "@artmate/markdown",
+  "type": "module",
+  "version": "1.4.1",
+  "private": true,
+  "license": "MIT",
+  "homepage": "https://mty-ai-md.mtyui.asia",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enootttt/ArtChat"
+  },
+  "bugs": {
+    "url": "https://github.com/enootttt/ArtChat/issues"
+  },
+  "keywords": [
+    "AI",
+    "Copilot",
+    "components",
+    "vite",
+    "vue3",
+    "element-plus",
+    "markdown"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "src/index.ts",
+  "files": [
+    "dist"
+  ]
+}
