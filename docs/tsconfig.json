@@ -5,7 +5,9 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "paths": {
-      "@artmate/chat": ["../packages/src"]
+      "@artmate/chat": ["../packages/chat/src"],
+      "@artmate/sdk": ["../packages/sdk/src"],
+      "@artmate/markdown": ["../packages/markdown/src"]
     },
     "strict": true,
     "strictNullChecks": true,

@@ -12,7 +12,15 @@ export default defineConfig({
       alias: [
         {
           find: /^@artmate\/chat$/,
-          replacement: path.resolve(__dirname, '../../packages/src'),
+          replacement: path.resolve(__dirname, '../../packages/chat/src'),
+        },
+        {
+          find: /^@artmate\/markdown$/,
+          replacement: path.resolve(__dirname, '../../packages/markdown/src'),
+        },
+        {
+          find: /^@artmate\/sdk$/,
+          replacement: path.resolve(__dirname, '../../packages/sdk/src'),
         },
       ],
     },
