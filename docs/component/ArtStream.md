@@ -12,7 +12,7 @@
 常见的 `ReadableStream` 实例，如 `await fetch(...).body` 使用示例:
 
 ```js
-import { ArtStream } from '@artmate/chat'
+import { ArtStream } from '@artmate/sdk'
 
 async function request() {
   const response = await fetch()
