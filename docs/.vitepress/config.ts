@@ -61,42 +61,58 @@ export default defineConfig({
         link: '/component/overview',
       },
       {
-        text: '通用',
+        text: '组件',
         items: [
-          { text: 'Bubble 对话气泡框', link: '/component/bubble' },
-          { text: 'Conversations 管理对话', link: '/component/conversations' },
+          {
+            text: '通用',
+            items: [
+              { text: 'Bubble 对话气泡框', link: '/component/bubble' },
+              { text: 'Conversations 管理对话', link: '/component/conversations' },
+            ],
+          },
+          {
+            text: '唤醒',
+            items: [
+              { text: 'Welcome 欢迎', link: '/component/welcome' },
+              { text: 'Prompts 提示集', link: '/component/prompts' },
+            ],
+          },
+          {
+            text: '表达',
+            items: [
+              { text: 'Sender 输入框', link: '/component/sender' },
+              { text: 'Attachments 输入附件', link: '/component/attachments' },
+              { text: 'Suggestion 快捷指令', link: '/component/suggestion' },
+            ],
+          },
+          {
+            text: '确认',
+            items: [{ text: 'ThoughtChain 思维链', link: '/component/thought-chain' }],
+          },
+          {
+            text: '反馈',
+            items: [{ text: 'Actions 操作列表', link: '/component/actions' }],
+          },
         ],
       },
       {
-        text: '唤醒',
+        text: 'SDK',
         items: [
-          { text: 'Welcome 欢迎', link: '/component/welcome' },
-          { text: 'Prompts 提示集', link: '/component/prompts' },
-        ],
-      },
-      {
-        text: '表达',
-        items: [
-          { text: 'Sender 输入框', link: '/component/sender' },
-          { text: 'Attachments 输入附件', link: '/component/attachments' },
-          { text: 'Suggestion 快捷指令', link: '/component/suggestion' },
-        ],
-      },
-      {
-        text: '确认',
-        items: [{ text: 'ThoughtChain 思维链', link: '/component/thought-chain' }],
-      },
-      {
-        text: '反馈',
-        items: [{ text: 'Actions 操作列表', link: '/component/actions' }],
-      },
-      {
-        text: '工具',
-        items: [
-          { text: 'useArtAgent 模型调度', link: '/component/useArtAgent' },
-          { text: 'useArtChat 数据管理', link: '/component/useArtChat' },
-          { text: 'ArtStream 流', link: '/component/ArtStream' },
-          { text: 'ArtRequest 请求', link: '/component/ArtRequest' },
+          {
+            text: '数据流',
+            items: [
+              { text: 'useArtChat 会话数据', link: '/component/useArtChat' },
+              { text: 'useArtConversations 会话管理', link: '/component/useArtConversations' },
+              { text: 'Chat Provider 数据提供', link: '/component/chat-provider' },
+            ],
+          },
+          {
+            text: '工具',
+            items: [
+              { text: 'ArtStream 流', link: '/component/ArtStream' },
+              { text: 'ArtRequest 请求', link: '/component/ArtRequest' },
+            ],
+          },
         ],
       },
     ],
