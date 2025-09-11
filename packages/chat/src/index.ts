@@ -1,11 +1,5 @@
 import './styles/index.scss'
 
-export { default as ArtRequest } from '../../sdk/src/artRequest'
-export type * from '../../sdk/src/artRequest'
-
-export { default as ArtStream } from '../../sdk/src/artStream'
-export type * from '../../sdk/src/artStream'
-
 export * from './actions'
 export type * from './actions'
 
