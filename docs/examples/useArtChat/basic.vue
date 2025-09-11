@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import type { BubbleListProps } from '@artmate/chat'
-import { BubbleList, Sender, useArtAgent, useArtChat } from '@artmate/chat'
+import type { ArtRequestOptions } from '@artmate/sdk'
+import { BubbleList, Sender } from '@artmate/chat'
+import { ArtRequest, DefaultChatProvider, useArtChat } from '@artmate/sdk'
 import { Promotion } from '@element-plus/icons-vue'
 import { ElAvatar, ElButton, ElIcon, ElSpace } from 'element-plus'
 import { computed, ref } from 'vue'
+
+interface ChatInput {
+  query: string
+}
 
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000))
 
@@ -14,37 +20,40 @@ const roles: BubbleListProps['roles'] = {
   },
   local: {
     placement: 'end',
+    messageRender(content: any) {
+      return content?.query
+    },
   },
 }
 
-const mockSuccess = ref(false)
 const content = ref('')
-const senderLoading = ref(false)
 
-// Agent for request
-const [agent] = useArtAgent<string, { message: string }, string>({
-  request: async ({ message }, { onSuccess, onError }) => {
-    senderLoading.value = true
-    await sleep()
-
-    senderLoading.value = false
-
-    mockSuccess.value = !mockSuccess.value
-
-    if (mockSuccess.value) {
-      onSuccess([`Mock success return. You said: ${message}`])
-    }
-
-    onError(new Error('Mock request failed'))
-  },
+const provider = new DefaultChatProvider<string, ChatInput, string>({
+  request: ArtRequest('https://api.example.com/chat', {
+    manual: true,
+    fetch: async (
+      _: Parameters<typeof fetch>[0],
+      options: ArtRequestOptions<ChatInput, string>
+    ) => {
+      await sleep()
+      const params = options?.params
+      return Promise.resolve(
+        new Response(JSON.stringify([`Mock success return. You said: ${params?.query}`]), {
+          headers: { 'Content-Type': 'application/json' },
+        })
+      )
+    },
+  }),
 })
 
 // Chat messages
-const { onRequest, messages } = useArtChat({
-  agent,
+const { onRequest, messages, requesting } = useArtChat({
+  provider,
   requestPlaceholder: 'Waiting...',
   requestFallback: 'Mock failed return. Please try again later.',
 })
+
+const senderLoading = computed(() => requesting.value)
 
 const messageList = computed(() => {
   return messages.value.map(({ id, message, status }) => ({
@@ -56,7 +65,9 @@ const messageList = computed(() => {
 })
 
 function submit() {
-  onRequest(content.value)
+  onRequest({
+    query: content.value,
+  })
   content.value = ''
 }
 </script>
@@ -70,7 +81,7 @@ function submit() {
         </ElAvatar>
       </template>
     </BubbleList>
-    <Sender v-model="content" :loading="senderLoading">
+    <Sender v-model="content" :loading="senderLoading" @submit="submit">
       <template #actions>
         <ElButton circle type="primary" :disabled="senderLoading || !content" @click="submit">
           <ElIcon color="white">
