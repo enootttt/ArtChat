@@ -8,7 +8,9 @@ import GroupTitle from './GroupTitle.vue'
 import useGroupable from './hooks/useGroupable'
 import ConversationItem from './item.vue'
 
-const props = defineProps<ConversationsProps>()
+const props = withDefaults(defineProps<ConversationsProps>(), {
+  items: () => []
+})
 
 const emit = defineEmits(['update:activeKey'])
 
@@ -16,7 +18,9 @@ const ns = useNamespace('conversations')
 
 const mergedActiveKey = computed(() => props.activeKey || props.defaultActiveKey || '')
 
-const [groupList, enableGroup] = useGroupable(props.groupable, props.items)
+const items = computed(() => props.items)
+
+const [groupList, enableGroup] = useGroupable(props.groupable, items)
 
 const mergedCls = computed(() => [
   ns.b(),

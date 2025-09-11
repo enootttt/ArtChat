@@ -1,6 +1,7 @@
-import type { Conversation, ConversationsProps, Groupable } from '../interface'
+import type { Ref } from 'vue'
 
-import { computed } from 'vue'
+import type { Conversation, ConversationsProps, Groupable } from '../interface'
+import { computed, ref } from 'vue'
 
 /**
  * 🔥 Only for handling ungrouped data. Do not use it for any other purpose! 🔥
@@ -17,8 +18,8 @@ type GroupMap = Record<string, Conversation[]>
 
 function useGroupable(
   groupable?: ConversationsProps['groupable'],
-  items: Conversation[] = []
-): [groupList: GroupList, enableGroup: boolean] {
+  items: Ref<Conversation[]> = ref([])
+): [groupList: Ref<GroupList>, enableGroup: Ref<boolean>] {
   const groupableWatch = computed(() => {
     if (!groupable) {
       return [false, undefined, undefined]
@@ -41,7 +42,7 @@ function useGroupable(
       const groupList = [
         {
           name: __UNGROUPED,
-          data: items,
+          data: items.value,
           title: undefined,
         },
       ]
@@ -51,7 +52,7 @@ function useGroupable(
 
     // 1. 将 data 做数据分组，填充 groupMap
 
-    const groupMap = items.reduce<GroupMap>((acc, item) => {
+    const groupMap = items.value.reduce<GroupMap>((acc, item) => {
       const group = item.group || __UNGROUPED
 
       if (!acc[group]) {
@@ -79,7 +80,7 @@ function useGroupable(
     return [groupList as GroupList, groupableWatch.value[0] as boolean]
   })
 
-  return groupListComputed.value
+  return [computed(() => groupListComputed.value[0]), computed(() => groupListComputed.value[1])]
 }
 
 export default useGroupable
