@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ThoughtChainItemProps } from '@artmate/chat'
-import { ArtStream, ThoughtChain } from '@artmate/chat'
+import { ThoughtChain } from '@artmate/chat'
+import { ArtStream } from '@artmate/sdk'
 import { Discount } from '@element-plus/icons-vue'
 import { ElButton, ElIcon } from 'element-plus'
 import { computed, ref } from 'vue'
@@ -29,7 +30,7 @@ function mockReadableStream() {
   return new ReadableStream({
     async start(controller) {
       for (const chunk of sipHeaders.concat(sdp)) {
-        await new Promise(resolve => setTimeout(resolve, 100))
+        await new Promise((resolve) => setTimeout(resolve, 100))
         controller.enqueue(new TextEncoder().encode(chunk))
       }
       controller.close()
@@ -54,8 +55,7 @@ async function readStream() {
 }
 
 const items = computed<ThoughtChainItemProps[]>(() => {
-  if (!lines.value.length)
-    return []
+  if (!lines.value.length) return []
   return [
     {
       title: 'Mock Custom Protocol - Log',
@@ -68,9 +68,7 @@ const items = computed<ThoughtChainItemProps[]>(() => {
 
 <template>
   <div class="demo">
-    <ElButton type="primary" @click="readStream">
-      Mock Custom Protocol - SIP
-    </ElButton>
+    <ElButton type="primary" @click="readStream">Mock Custom Protocol - SIP</ElButton>
     <ThoughtChain :items="items">
       <template #icon="{ info }">
         <ElIcon size="20" :color="info.status ? 'white' : 'block'">
@@ -78,8 +76,10 @@ const items = computed<ThoughtChainItemProps[]>(() => {
         </ElIcon>
       </template>
       <template #content="{ info }">
-        <pre v-if="info.content">
-          <code v-for="(item, index) in info.content" :key="index">{{ item }}</code>
+        <pre v-if="info.content" style="">
+          <template v-for="(item, index) in info.content" :key="index">
+            <code>{{ item }}</code>
+          </template>
         </pre>
       </template>
     </ThoughtChain>
@@ -92,5 +92,12 @@ const items = computed<ThoughtChainItemProps[]>(() => {
   flex-wrap: wrap;
   gap: 10px;
   overflow-x: auto;
+  pre {
+    display: flex;
+    flex-direction: column;
+    code {
+      white-space: pre-wrap;
+    }
+  }
 }
 </style>

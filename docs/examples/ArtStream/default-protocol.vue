@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ThoughtChainItemProps } from '@artmate/chat'
-import { ArtStream, Bubble, ThoughtChain } from '@artmate/chat'
+import { Bubble, ThoughtChain } from '@artmate/chat'
+import { ArtStream } from '@artmate/sdk'
 import { Discount } from '@element-plus/icons-vue'
 import { ElButton, ElIcon, ElSpace } from 'element-plus'
 import { computed, ref } from 'vue'
