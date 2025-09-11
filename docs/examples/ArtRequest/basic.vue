@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ThoughtChainItemProps } from '@artmate/chat'
-import { ArtRequest, ThoughtChain } from '@artmate/chat'
+import { ThoughtChain } from '@artmate/chat'
+import { ArtRequest } from '@artmate/sdk'
 import { Discount, Loading } from '@element-plus/icons-vue'
 import { ElButton, ElIcon, ElSpace } from 'element-plus'
 import { computed, ref } from 'vue'
@@ -8,17 +9,7 @@ import { computed, ref } from 'vue'
  * 🔔 Please replace the BASE_URL, PATH, MODEL, API_KEY with your own values.
  */
 const BASE_URL = 'https://api.example.com'
-const PATH = '/chat'
-const MODEL = 'gpt-3.5-turbo'
-// const API_KEY = '';
-
-const exampleRequest = ArtRequest({
-  baseURL: BASE_URL + PATH,
-  model: MODEL,
-
-  /** 🔥🔥 Its dangerously! */
-  // dangerouslyApiKey: API_KEY
-})
+const PATH = '/get-user-info'
 
 const status = ref<ThoughtChainItemProps['status']>()
 const lines = ref<Record<string, string>[]>([])
@@ -26,15 +17,11 @@ const lines = ref<Record<string, string>[]>([])
 async function request() {
   status.value = 'pending'
 
-  await exampleRequest.create(
-    {
-      messages: [{ role: 'user', content: 'hello, who are u?' }],
-      stream: true,
-    },
-    {
-      onSuccess: (messages) => {
+  await ArtRequest(BASE_URL + PATH, {
+    callbacks: {
+      onSuccess: (message) => {
         status.value = 'success'
-        console.log('onSuccess', messages)
+        console.log('onSuccess', message)
       },
       onError: (error) => {
         status.value = 'error'
@@ -45,11 +32,11 @@ async function request() {
         console.log('onUpdate', msg)
       },
     },
-  )
+  })
 }
 
 const description = computed(() => {
-  if (status.value === 'error' && exampleRequest.baseURL === BASE_URL + PATH) {
+  if (status.value === 'error') {
     return 'Please replace the BASE_URL, PATH, MODEL, API_KEY with your own values.'
   }
   return ''

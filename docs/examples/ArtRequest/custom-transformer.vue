@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { ThoughtChainItemProps } from '@artmate/chat'
-import { ArtRequest, ThoughtChain } from '@artmate/chat'
+import { ThoughtChain } from '@artmate/chat'
+import { ArtRequest } from '@artmate/sdk'
 import { Discount, Loading } from '@element-plus/icons-vue'
 import { ElButton, ElIcon } from 'element-plus'
 import { computed, ref } from 'vue'
 
-const BASE_URL = 'https://api.example.host'
+const BASE_URL = 'https://api.example.com'
 const PATH = '/chat'
-const MODEL = 'gpt-4o'
 
 const ND_JSON_SEPARATOR = '\n'
 
@@ -24,7 +24,7 @@ async function mockFetch() {
     new ReadableStream({
       async start(controller) {
         for (const chunk of chunks) {
-          await new Promise(resolve => setTimeout(resolve, 100))
+          await new Promise((resolve) => setTimeout(resolve, 100))
           controller.enqueue(new TextEncoder().encode(chunk))
         }
         controller.close()
@@ -34,17 +34,11 @@ async function mockFetch() {
       headers: {
         'Content-Type': 'application/x-ndjson',
       },
-    },
+    }
   )
 
   return response
 }
-
-const exampleRequest = ArtRequest({
-  baseURL: BASE_URL + PATH,
-  model: MODEL,
-  fetch: mockFetch,
-})
 
 const status = ref<ThoughtChainItemProps['status']>()
 const lines = ref<string[]>([])
@@ -52,12 +46,12 @@ const lines = ref<string[]>([])
 async function request() {
   status.value = 'pending'
 
-  await exampleRequest.create(
-    {
+  await ArtRequest(BASE_URL + PATH, {
+    params: {
       messages: [{ role: 'user', content: 'hello, who are u?' }],
       stream: true,
     },
-    {
+    callbacks: {
       onSuccess: (messages) => {
         status.value = 'success'
         console.log('onSuccess', messages)
@@ -71,12 +65,13 @@ async function request() {
         console.log('onUpdate', msg)
       },
     },
-    new TransformStream<string, string>({
+    transformStream: new TransformStream<string, string>({
       transform(chunk, controller) {
         controller.enqueue(chunk)
       },
     }),
-  )
+    fetch: mockFetch,
+  })
 }
 const items = computed<ThoughtChainItemProps[]>(() => [
   {
@@ -92,39 +87,44 @@ const items = computed<ThoughtChainItemProps[]>(() => [
     <ElButton type="primary" :disabled="status === 'pending'" @click="request">
       Agent Request
     </ElButton>
-    <ThoughtChain :items="items">
-      <template #icon="{ info }">
-        <ElIcon size="20" :color="info.status ? 'white' : 'block'">
-          <Loading v-if="info.status === 'pending'" />
-          <Discount v-else />
-        </ElIcon>
-      </template>
-      <template #content="{ info }">
-        <pre v-if="info.content">
+    <div class="preview">
+      <ThoughtChain :items="items">
+        <template #icon="{ info }">
+          <ElIcon size="20" :color="info.status ? 'white' : 'block'">
+            <Loading v-if="info.status === 'pending'" />
+            <Discount v-else />
+          </ElIcon>
+        </template>
+        <template #content="{ info }">
+          <pre v-if="info.content">
           <code>{{ info.content.join(ND_JSON_SEPARATOR) }}</code>
         </pre>
-      </template>
-    </ThoughtChain>
+        </template>
+      </ThoughtChain>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-pre {
-  width: auto;
-  margin: 0;
-  overflow: auto;
-
-  code {
-    display: block;
-    padding: 12px 16px;
-    font-size: 14px;
-  }
-}
-
 .demo {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   overflow-x: auto;
+  .preview {
+    max-width: 100%;
+
+    pre {
+      width: 100%;
+      margin: 0;
+      overflow: auto;
+
+      code {
+        display: block;
+        padding: 12px 16px;
+        font-size: 14px;
+      }
+    }
+  }
 }
 </style>
