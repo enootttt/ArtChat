@@ -96,6 +96,15 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Markdown',
+        items: [
+          {
+            text: '代码示例',
+            link: '/component/markdown',
+          },
+        ],
+      },
+      {
         text: 'SDK',
         items: [
           {

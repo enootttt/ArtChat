@@ -87,10 +87,6 @@ function onSourceVisibleKeydown(e: KeyboardEvent) {
       tr {
         border: unset;
         background-color: unset;
-
-        td {
-          border: unset;
-        }
       }
     }
   }
