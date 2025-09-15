@@ -1,0 +1,241 @@
+// // 媒体查询：当用户系统主题为暗色时 基于浏览器的主题色
+// @media (prefers-color-scheme: light) {
+//   body {
+//     --shiki-custom-brr-mini: 3px;
+//     --shiki-custom-brr: 5px;
+//     --shiki-custom-blur: 10px;
+//     --shiki-code-header-bg: #fafafa;
+//     --shiki-code-header-span-color: #575757;
+//   }
+// }
+
+// // 媒体查询：当用户系统主题为暗色时
+// @media (prefers-color-scheme: dark) {
+//   body {
+//     --shiki-custom-brr-mini: 3px;
+//     --shiki-custom-brr: 5px;
+//     --shiki-custom-blur: 10px;
+//     --shiki-code-header-bg: #272727;
+//     --shiki-code-header-span-color: #fafafa;
+//   }
+
+//   .shiki,
+//   .shiki span {
+//     color: var(--shiki-dark) !important;
+//     background-color: var(--shiki-dark-bg) !important;
+//     /* 可选，用于定义字体样式 */
+//     font-style: var(--shiki-dark-font-style) !important;
+//     font-weight: var(--shiki-dark-font-weight) !important;
+//     text-decoration: var(--shiki-dark-text-decoration) !important;
+//   }
+// }
+
+body {
+  --shiki-custom-brr-mini: 3px;
+  --shiki-custom-brr: 5px;
+  --shiki-custom-blur: 10px;
+  --shiki-code-header-bg: #fafafa;
+  --shiki-code-header-span-color: #575757;
+  --shiki-code-header-btn-bg: #ebedf0;
+}
+
+body.dark {
+  --shiki-custom-brr-mini: 3px;
+  --shiki-custom-brr: 5px;
+  --shiki-custom-blur: 10px;
+  --shiki-code-header-bg: #272727;
+  --shiki-code-header-span-color: #fafafa;
+  --shiki-code-header-btn-bg: #3b3b3b;
+}
+
+body.dark .shiki,
+body.dark .shiki span {
+  /* 可选，用于定义字体样式 */
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  color: var(--shiki-dark) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+.shiki {
+  position: relative;
+}
+
+.elx-xmarkdown-container {
+  padding: 5px 10px;
+  color: black;
+  border-radius: var(--shiki-custom-brr);
+
+  /* 表格整体边框 */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  }
+
+  /* 表头样式 */
+  th {
+    padding: 8px;
+    text-align: left;
+    background-color: white;
+    border: 1px solid #ddd;
+  }
+
+  /* 表格行样式 */
+  td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+
+  tbody {
+    tr:nth-child(even) {
+      background-color: white;
+    }
+
+    tr:nth-child(odd) {
+      background-color: var(--el-fill-color-lighter);
+    }
+  }
+
+  pre code {
+    text-shadow: none !important;
+    // 设置代码字体样式
+    span {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      text-align: left;
+      // white-space: pre-wrap;
+      word-spacing: normal;
+      hyphens: none;
+      word-break: normal;
+      word-wrap: normal;
+      tab-size: 4;
+    }
+  }
+
+  pre div.pre-md {
+    position: relative;
+    min-width: 180px !important;
+    border: 1px solid var(--el-border-color);
+    border-radius: var(--shiki-custom-brr-mini);
+
+    .markdown-elxLanguage-header-div {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      box-sizing: content-box !important;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 5px 5px 8px;
+      margin: 0;
+      background-color: var(--shiki-code-header-bg);
+      border-radius: var(--shiki-custom-brr-mini);
+      backdrop-filter: blur(var(--shiki-custom-blur));
+
+      span {
+        background-color: transparent !important;
+        box-shadow: none !important;
+      }
+
+      .markdown-elxLanguage-header-span {
+        font-family: sans-serif;
+        font-size: 14px;
+        font-weight: bold !important;
+        color: var(--shiki-code-header-span-color) !important;
+        user-select: none;
+        background-color: transparent !important;
+
+        &:hover {
+          cursor: pointer !important;
+        }
+      }
+
+      .markdown-elxLanguage-header-space-start,
+      .markdown-elxLanguage-header-space {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .markdown-elxLanguage-header-space-start {
+        justify-content: flex-start;
+      }
+
+      .shiki-header-button {
+        width: fit-content !important;
+        height: 24px;
+        padding-inline: 3px;
+        cursor: pointer;
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--shiki-custom-brr);
+        transition: color 0.3s ease-in-out;
+
+        .el-icon {
+          font-size: 15px !important;
+        }
+
+        svg {
+          width: 15px;
+          height: 15px;
+        }
+
+        .el-icon,
+        span {
+          color: var(--shiki-code-header-span-color) !important;
+          background-color: transparent !important;
+        }
+
+        &:hover {
+          background-color: var(--shiki-code-header-btn-bg);
+        }
+
+        span {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      .shiki-header-button-expand {
+        span {
+          width: 12px;
+          height: 12px;
+        }
+      }
+
+      .markdown-elxLanguage-header-toggle-expand {
+        margin: 2px 0 0;
+        transform: rotate(-90deg);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .copied {
+        color: var(--el-color-success);
+      }
+    }
+
+    code {
+      box-sizing: border-box;
+      flex: 1;
+      width: 100%;
+      height: 0;
+    }
+  }
+
+  pre div.is-expanded {
+    height: auto !important;
+
+    code {
+      height: auto !important;
+      padding: 8px !important;
+    }
+
+    .markdown-elxLanguage-header-toggle-expand {
+      transform: rotate(0deg) !important;
+    }
+  }
+}

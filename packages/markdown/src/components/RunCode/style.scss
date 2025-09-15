@@ -1,0 +1,95 @@
+.elx-run-code-dialog,
+.elx-run-code-drawer {
+  width: 75% !important;
+  background-color: var(--shiki-code-header-bg) !important;
+
+  .el-dialog__body {
+    overflow: auto;
+    border-radius: var(--shiki-custom-brr);
+  }
+
+  .el-drawer__body {
+    overflow: auto;
+    border-radius: var(--shiki-custom-brr);
+  }
+
+  .el-drawer__header {
+    position: relative;
+    margin-bottom: 0 !important;
+  }
+
+  .el-dialog__headerbtn,
+  .el-drawer__close-btn {
+    top: 15px;
+    right: 10px;
+    box-sizing: border-box;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    font-size: 20px;
+    color: var(--shiki-code-header-span-color);
+    border-radius: var(--shiki-custom-brr);
+
+    &:hover {
+      background-color: var(--shiki-code-header-btn-bg);
+    }
+  }
+
+  .view-code-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    box-sizing: border-box;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    border-radius: var(--shiki-custom-brr);
+
+    span {
+      width: 32px;
+      height: 32px;
+      color: var(--shiki-code-header-span-color);
+
+      &:hover {
+        color: var(--el-color-primary);
+      }
+    }
+
+    &:hover {
+      background-color: var(--shiki-code-header-btn-bg);
+    }
+  }
+
+  .customCloseBtn {
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+}
+
+// 媒体查询
+
+@media (max-width: 768px) {
+  .elx-run-code-dialog,
+  .elx-run-code-drawer {
+    width: 100% !important;
+  }
+}
+
+.elx-run-code-content-view-iframe {
+  height: 713px;
+  overflow: hidden;
+}
+
+.elx-run-code-dialog-view {
+  .el-dialog__body {
+    border: 1px solid transparent !important;
+  }
+
+  .el-drawer__body {
+    border: 1px solid transparent !important;
+  }
+}

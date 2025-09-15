@@ -24,8 +24,48 @@
   "sideEffects": [
     "**/*.css"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/typings/index.d.ts",
+      "import": "./dist/es/packages/markdown/src/index.js",
+      "require": "./dist/cjs/packages/markdown/src/index.js"
+    },
+    "./dist/index.css": "./dist/es/index.css"
+  },
   "main": "src/index.ts",
   "files": [
     "dist"
-  ]
+  ],
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "catalog:",
+    "@vueuse/core": "catalog:",
+    "deepmerge": "^4.3.1",
+    "dompurify": "^3.2.6",
+    "element-plus": "catalog:",
+    "hast": "1.0.0",
+    "lodash": "^4.17.21",
+    "mdast": "^3.0.0",
+    "mdast-util-to-hast": "^13.2.0",
+    "mermaid": "^11.11.0",
+    "property-information": "^7.1.0",
+    "rehype-katex": "^7.0.1",
+    "rehype-raw": "^7.0.0",
+    "rehype-sanitize": "^6.0.0",
+    "remark-breaks": "^4.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "sass": "catalog:",
+    "shiki": "^3.12.2",
+    "swrv": "^1.1.0",
+    "ts-md5": "^2.0.1",
+    "unified": "^11.0.5",
+    "unist-util-visit": "5.0.0",
+    "vue": "catalog:"
+  }
 }

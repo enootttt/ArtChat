@@ -1,0 +1,43 @@
+.elx-highlight-code-wrapper {
+  display: flex;
+  overflow: hidden;
+  background: transparent;
+
+  .line-numbers {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 1rem;
+    user-select: none;
+
+    .line-number {
+      display: inline-block;
+      flex-shrink: 0;
+      padding: 0 0 0 0.3em;
+      color: var(--el-text-color-secondary);
+      text-align: right;
+      user-select: none;
+    }
+  }
+
+  .elx-highlight-code-scrollbar {
+    .code-lines {
+      white-space: pre;
+
+      & > span {
+        display: block;
+        width: max-content;
+
+        .line {
+          display: inline-block;
+          width: max-content;
+          white-space: pre;
+
+          span {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}
