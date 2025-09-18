@@ -19,6 +19,8 @@ const rollupOutputBase = {
   entryFileNames: '[name].js',
   // 保留模块结构
   preserveModules: true,
+  // 设置模块根目录为 src
+  preserveModulesRoot: 'src',
   // 使用命名导出
   exports: 'named' as 'named',
 }
