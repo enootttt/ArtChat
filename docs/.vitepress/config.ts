@@ -68,6 +68,7 @@ export default defineConfig({
             items: [
               { text: 'Bubble 对话气泡框', link: '/component/bubble' },
               { text: 'Conversations 管理对话', link: '/component/conversations' },
+              { text: 'Notification 系统通知', link: '/component/notification' },
             ],
           },
           {
