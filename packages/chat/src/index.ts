@@ -17,19 +17,23 @@ export type * from './fileList'
 
 export * from './hooks'
 
+export * from './notification'
+export type * from './notification'
+
 export { default as Prompts } from './prompts'
+
 export type * from './prompts'
-
 export * from './sender'
+
 export type * from './sender'
-
 export * from './suggestion'
+
 export type * from './suggestion'
-
 export * from './thought-chain'
-export type * from './thought-chain'
 
+export type * from './thought-chain'
 export { default as version } from './version'
+
 export { default as Welcome } from './welcome/index.vue'
 
 export type * from './welcome/index.vue'
