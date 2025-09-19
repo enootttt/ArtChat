@@ -8,7 +8,16 @@ import { useChatStore } from './store'
 
 export type SimpleType = string | number | boolean | object
 
-export type MessageStatus = 'local' | 'loading' | 'success' | 'error'
+enum MessageStatusEnum {
+  local = 'local',
+  loading = 'loading',
+  updating = 'updating',
+  success = 'success',
+  error = 'error',
+  abort = 'abort',
+}
+
+export type MessageStatus = `${MessageStatusEnum}`
 
 type RequestPlaceholderFn<Message extends SimpleType> = (
   message: Message,
@@ -81,13 +90,12 @@ export default function useArtChat<
   } = config
 
   // ========================= Agent Messages =========================
-  const idRef = { value: 0 } // 替代 React.useRef
+  const idRef = { value: 0 }
   const requestHandlerRef = {
     value: undefined as AbstractArtRequestClass<Input, Output> | undefined,
   }
   const requesting = ref<boolean>(false)
 
-  // 使用 Vue 版本的 useChatStore
   const { messages, setMessages, getMessages, setMessage } = useChatStore<MessageInfo<ChatMessage>>(
     () =>
       (defaultMessages || []).map((info, index) => ({
@@ -269,7 +277,7 @@ export default function useArtChat<
 
     provider.injectRequest({
       onUpdate: (chunk: Output, headers: Headers) => {
-        updateMessage('loading', chunk, [], headers)
+        updateMessage('updating', chunk, [], headers)
       },
       onSuccess: (chunks: Output[], headers: Headers) => {
         requesting.value = false
@@ -281,22 +289,38 @@ export default function useArtChat<
           let fallbackMsg: ChatMessage
           // Update as error
           if (typeof requestFallback === 'function') {
-            fallbackMsg = await (requestFallback as RequestFallbackFn<ChatMessage>)(message, {
-              error,
-              messages: getRequestMessages(),
-            })
+            // typescript has bug that not get real return type when use `typeof function` check
+            const messages = getRequestMessages()
+            const msg = getMessages().find(
+              (info) => info.id === loadingMsgId || info.id === updatingMsgId
+            )
+            fallbackMsg = await (requestFallback as RequestFallbackFn<ChatMessage>)(
+              msg?.message || message,
+              {
+                error,
+                messages,
+              }
+            )
           } else {
             fallbackMsg = requestFallback
           }
 
           setMessages((ori: MessageInfo<ChatMessage>[]) => [
             ...ori.filter((info) => info.id !== loadingMsgId && info.id !== updatingMsgId),
-            createMessage(fallbackMsg, 'error'),
+            createMessage(fallbackMsg, error.name === 'AbortError' ? 'abort' : 'error'),
           ])
         } else {
           // Remove directly
           setMessages((ori: MessageInfo<ChatMessage>[]) => {
-            return ori.filter((info) => info.id !== loadingMsgId && info.id !== updatingMsgId)
+            return ori.map((info: MessageInfo<ChatMessage>) => {
+              if (info.id === loadingMsgId || info.id === updatingMsgId) {
+                return {
+                  ...info,
+                  status: error.name === 'AbortError' ? 'abort' : 'error',
+                }
+              }
+              return info
+            })
           })
         }
       },

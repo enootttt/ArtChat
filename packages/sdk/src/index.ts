@@ -1,3 +1,4 @@
+export type { DefaultMessageInfo } from './artChat'
 export { default as useArtChat } from './artChat'
 export * from './artChat/providers'
 export type {
