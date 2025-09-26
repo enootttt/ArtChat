@@ -1,0 +1,5 @@
+export { default as DislikeFiled } from './DislikeFiled.vue'
+export { default as DislikeOutlined } from './DislikeOutlined.vue'
+export { default as LikeFilled } from './LikeFiled.vue'
+export { default as LikeOutlined } from './LikeOutlined.vue'
+export { default as LoadingOutlined } from './LoadingOutlined.vue'
