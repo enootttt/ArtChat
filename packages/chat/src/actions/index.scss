@@ -50,7 +50,7 @@ $prefix: 'actions' !default;
     }
   }
 
-  .border {
+  .filled {
     gap: var(--padding-sm);
     padding: var(--padding-xs) var(--padding-sm);
     color: var(--color-text);
@@ -67,7 +67,27 @@ $prefix: 'actions' !default;
     }
   }
 
+  .outlined {
+    padding: var(--padding-xs) var(--padding-sm);
+    padding-inline: calc(var(--padding-xxs) + 1px);
+    border: 1px solid var(--border-secondary);
+    border-radius: var(--border-radius);
+  }
+
   .block {
     display: flex;
+  }
+
+  &-feedback {
+    display: inline-flex;
+    flex-direction: row;
+    gap: var(--padding-sm);
+    align-items: center;
+    color: var(--color-text);
+
+    &-item-like,
+    &-item-dislike {
+      cursor: pointer;
+    }
   }
 }

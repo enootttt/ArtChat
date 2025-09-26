@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import type { ActionItem, ActionsEmits, ActionsProps } from './interface'
 import { ElIcon, ElTooltip } from 'element-plus'
 import { computed } from 'vue'
@@ -9,16 +9,14 @@ import ActionMenu from './ActionMenu.vue'
 
 withDefaults(defineProps<ActionsProps>(), {
   trigger: 'hover',
-  placement: 'top'
+  placement: 'top',
 })
 
 const emits = defineEmits<ActionsEmits>()
 
 const ns = useNamespace('actions')
 
-const mergedCls = computed(() => [
-  ns.b(),
-])
+const mergedCls = computed(() => [ns.b()])
 
 function handleItemClick(key: string, item: ActionItem) {
   if (item.onItemClick) {
@@ -36,9 +34,14 @@ function handleItemClick(key: string, item: ActionItem) {
 <template>
   <div :class="mergedCls">
     <div :class="[ns.b('list'), variant, block]">
-      <template v-for="(item) in items" :key="item.key">
+      <template v-for="item in items" :key="item.key">
         <template v-if="'children' in item">
-          <ActionMenu :key="item.key" :item="item" :trigger="trigger" @click="emits('click', $event)">
+          <ActionMenu
+            :key="item.key"
+            :item="item"
+            :trigger="trigger"
+            @click="emits('click', $event)"
+          >
             <template #icon="{ info }">
               <slot name="icon" :info="info">
                 <ElIcon>
@@ -49,9 +52,9 @@ function handleItemClick(key: string, item: ActionItem) {
           </ActionMenu>
         </template>
         <template v-else>
-          <div :class="ns.b('list-item')" @click="handleItemClick(item.key, item)">
-            <div :class="ns.b('list-item-icon')">
-              <slot name="icon" :info="item">
+          <slot name="icon" :info="item">
+            <div :class="ns.b('list-item')" @click="handleItemClick(item.key, item)">
+              <div :class="ns.b('list-item-icon')">
                 <template v-if="item.icon">
                   <ElTooltip :content="item.label" :disabled="!item.label" :placement="placement">
                     <ElIcon>
@@ -59,9 +62,9 @@ function handleItemClick(key: string, item: ActionItem) {
                     </ElIcon>
                   </ElTooltip>
                 </template>
-              </slot>
+              </div>
             </div>
-          </div>
+          </slot>
         </template>
       </template>
     </div>

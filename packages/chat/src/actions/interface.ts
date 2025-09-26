@@ -1,5 +1,5 @@
 import type { dropdownItemProps } from 'element-plus'
-import type { Component } from 'vue'
+import type { Component, CSSProperties } from 'vue'
 
 type DropdownItemProps = typeof dropdownItemProps
 
@@ -78,7 +78,7 @@ export interface ActionsProps {
    * @descEN Variant.
    * @default 'borderless'
    */
-  variant?: 'borderless' | 'border'
+  variant?: 'borderless' | 'filled' | 'outlined'
   /**
    * @desc 触发方式
    * @descEN Trigger mode.
@@ -103,4 +103,106 @@ export interface ActionsProps {
 
 export interface ActionsEmits {
   (e: 'click', menuInfo: { item: ActionItem; key: string; keyPath: string[] }): void
+}
+
+// --------------------- ActionsItem ---------------------
+
+export enum ACTIONS_ITEM_STATUS {
+  /**
+   * @desc 等待状态
+   */
+  LOADING = 'loading',
+  /**
+   * @desc 失败状态
+   */
+  ERROR = 'error',
+  /**
+   * @desc 执行中
+   */
+  RUNNING = 'running',
+  /**
+   * @desc 默认
+   */
+  DEFAULT = 'default',
+}
+
+export interface ActionsItemProps {
+  /**
+   * @desc 状态
+   * @descEN status
+   */
+  status?: `${ACTIONS_ITEM_STATUS}`
+  /**
+   * @desc 图标
+   * @descEN icon
+   */
+  defaultIcon: Component
+  /**
+   * @desc 自定义操作的显示标签
+   * @descEN Display label for the custom action.
+   */
+  label?: string
+  /**
+   * @desc 执行中图标
+   * @descEN running icon
+   */
+  runningIcon?: Component
+}
+
+// --------------------- ActionsCopy ---------------------
+export interface ActionsCopyProps {
+  /**
+   * @desc 复制的文本
+   * @descEN Text to be copied
+   */
+  text?: string
+
+  /**
+   * @desc 复制图标
+   * @descEN Copy icon
+   */
+  icon?: Component
+}
+
+// --------------------- ActionsFeedback ---------------------
+export type SemanticType = 'like' | 'liked' | 'dislike' | 'disliked' | 'root'
+
+export enum FEEDBACK_VALUE {
+  like = 'like',
+  dislike = 'dislike',
+  default = 'default',
+}
+
+export interface ActionsFeedbackProps {
+  /**
+   * @desc 喜欢图标选中颜色
+   * @descEN Like icon selected color
+   */
+  likeColor?: string
+  /**
+   * @desc 不喜欢图标选中颜色
+   * @descEN Dislike icon selected color
+   */
+  dislikeColor?: string
+  /**
+   * @desc 反馈状态值
+   * @descEN Feedback status value
+   */
+  value?: `${FEEDBACK_VALUE}`
+  /**
+   * @desc 反馈状态变化回调
+   * @descEN Feedback status change callback
+   */
+  onChange?: (value: `${FEEDBACK_VALUE}`) => void
+
+  /**
+   * @desc 语义化结构 className
+   * @descEN Semantic structure class names
+   */
+  classNames?: Partial<Record<SemanticType, string>>
+  /**
+   * @desc 语义化结构 style
+   * @descEN Semantic structure styles
+   */
+  styles?: Partial<Record<SemanticType, CSSProperties>>
 }
