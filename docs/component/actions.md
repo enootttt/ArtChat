@@ -24,6 +24,14 @@ actions/more
 
 :::
 
+### 预设模板
+
+:::demo 对于一些常用的功能，可以使用预设的组件来实现快速的搭建。
+
+actions/preset
+
+:::
+
 ### 使用变体
 
 :::demo 使用 variant 切换变体。
